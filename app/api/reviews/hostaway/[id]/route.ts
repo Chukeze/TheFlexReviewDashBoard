@@ -1,8 +1,8 @@
 import { NextRequest } from 'next/server';
 import { readApprovalMap, writeApprovalMap } from '@/lib/approvalStore';
 
-export async function PATCH(req: NextRequest, context: { params: { id: string } }) {
-  const id = context.params.id;
+export async function PATCH(req: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const id = (await context.params).id;
   const body = await req.json().catch(() => ({}));
   const approved = !!body.approved;
   const map = readApprovalMap();
