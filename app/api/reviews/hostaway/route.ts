@@ -4,7 +4,7 @@ import path from 'path'
 import { normalizeMany } from '@/lib/normalize'
 import { buildAggregates } from '@/lib/aggregates'
 import { ApiResponse, RawReview } from '@/lib/types'
-import { getHostawayAccessToken } from '@/lib/hostawayAuth'
+//import {fetchHostawayReviews} from '@/lib/hostawayAuth'
 
 export async function GET(req: NextRequest) {
   const sp = req.nextUrl.searchParams
@@ -51,16 +51,3 @@ export async function GET(req: NextRequest) {
   })
 }
 
-export async function fetchHostawayReviews(params: URLSearchParams) {
-  const token = await getHostawayAccessToken()
-  const url = new URL(
-    'https://api.hostaway.com/v1/reviews?' + params.toString()
-  )
-  // Forward selected filters to Hostaway if you like
-  const res = await fetch(url.toString(), {
-    headers: { Authorization: `Bearer ${token}`, 'Cache-control': 'no-cache' },
-  })
-  const json = await res.json()
-  // Hostaway’s standard shape has { status, result: Review[] } — normalize next:
-  return json.result ?? []
-}
