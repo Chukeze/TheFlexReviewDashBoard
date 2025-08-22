@@ -1,0 +1,855 @@
+{
+  "status": "success",
+  "result": [
+    {
+      "id": 1001,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": null,
+      "publicReview": "Spotless and quiet. Loved the location near the tube.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 9
+        },
+        {
+          "category": "location",
+          "rating": 10
+        }
+      ],
+      "submittedAt": "2023-11-18 09:12:01",
+      "guestName": "Amara B.",
+      "listingName": "Soho Studio \u2013 King Bed",
+      "channel": "airbnb"
+    },
+    {
+      "id": 1002,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": null,
+      "publicReview": "Great stay overall but the check-in was slightly confusing.",
+      "reviewCategory": [
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "communication",
+          "rating": 8
+        },
+        {
+          "category": "cleanliness",
+          "rating": 9
+        }
+      ],
+      "submittedAt": "2024-02-04 16:44:11",
+      "guestName": "Jacob M.",
+      "listingName": "Soho Studio \u2013 King Bed",
+      "channel": "booking"
+    },
+    {
+      "id": 1003,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 9,
+      "publicReview": "Stylish interiors and comfy bed. Would return.",
+      "reviewCategory": [
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 9
+        }
+      ],
+      "submittedAt": "2024-05-22 12:03:07",
+      "guestName": "Eve C.",
+      "listingName": "Soho Studio \u2013 King Bed",
+      "channel": "airbnb"
+    },
+    {
+      "id": 1101,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": null,
+      "publicReview": "Bright flat with a lovely balcony view.",
+      "reviewCategory": [
+        {
+          "category": "location",
+          "rating": 9
+        },
+        {
+          "category": "cleanliness",
+          "rating": 8
+        },
+        {
+          "category": "value",
+          "rating": 8
+        }
+      ],
+      "submittedAt": "2024-01-10 10:10:10",
+      "guestName": "Sofia L.",
+      "listingName": "Shoreditch Heights \u2013 2BR Loft",
+      "channel": "vrbo"
+    },
+    {
+      "id": 1102,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 8,
+      "publicReview": "Host was responsive. Kitchen could use more utensils.",
+      "reviewCategory": [
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "amenities",
+          "rating": 6
+        }
+      ],
+      "submittedAt": "2024-06-03 08:00:00",
+      "guestName": "Liam T.",
+      "listingName": "Shoreditch Heights \u2013 2BR Loft",
+      "channel": "booking"
+    },
+    {
+      "id": 1201,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": null,
+      "publicReview": "Check\u2011in was seamless and host provided local tips.",
+      "reviewCategory": [
+        {
+          "category": "check_in",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 9
+        }
+      ],
+      "submittedAt": "2024-03-14 18:22:54",
+      "guestName": "Noah K.",
+      "listingName": "Kensington Garden Flat",
+      "channel": "airbnb"
+    },
+    {
+      "id": 1202,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 6,
+      "publicReview": "Good value but bathroom extractor was noisy.",
+      "reviewCategory": [
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "cleanliness",
+          "rating": 7
+        },
+        {
+          "category": "bathroom",
+          "rating": 5
+        }
+      ],
+      "submittedAt": "2024-04-09 21:09:50",
+      "guestName": "Priya S.",
+      "listingName": "Kensington Garden Flat",
+      "channel": "booking"
+    },
+    {
+      "id": 1203,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": null,
+      "publicReview": "Excellent communication; late checkout appreciated.",
+      "reviewCategory": [
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "check_in",
+          "rating": 9
+        }
+      ],
+      "submittedAt": "2024-07-01 07:30:12",
+      "guestName": "Mark D.",
+      "listingName": "Kensington Garden Flat",
+      "channel": "airbnb"
+    },
+    {
+      "id": 1004,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": null,
+      "publicReview": "Amazing location; a bit of street noise at night.",
+      "reviewCategory": [
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 5
+        }
+      ],
+      "submittedAt": "2024-08-19 10:15:00",
+      "guestName": "Sasha G.",
+      "listingName": "Soho Studio \u2013 King Bed",
+      "channel": "vrbo"
+    },
+    {
+      "id": 1103,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 7,
+      "publicReview": "Clean and spacious, but Wi-Fi dropped occasionally.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 9
+        },
+        {
+          "category": "wifi",
+          "rating": 6
+        }
+      ],
+      "submittedAt": "2024-08-20 11:00:00",
+      "guestName": "Tariq N.",
+      "listingName": "Shoreditch Heights \u2013 2BR Loft",
+      "channel": "airbnb"
+    },
+    {
+      "id": 1204,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 10,
+      "publicReview": "Perfect for our family trip. Quiet and comfortable.",
+      "reviewCategory": [
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "cleanliness",
+          "rating": 10
+        }
+      ],
+      "submittedAt": "2024-08-21 09:20:00",
+      "guestName": "Hannah R.",
+      "listingName": "Kensington Garden Flat",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7454,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 10,
+      "publicReview": "Would definitely recommend to friends.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        }
+      ],
+      "submittedAt": "2025-08-09 14:30:00",
+      "guestName": "Kanye Wesley",
+      "listingName": "3A SE1 - Borough Market Loft",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7455,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 10,
+      "publicReview": "Would definitely recommend to friends.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 10
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-08-09 14:30:00",
+      "guestName": "Kanye Wesley",
+      "listingName": "3A SE1 - Borough Market Loft",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7456,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 10,
+      "publicReview": "Would definitely recommend to friends.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        }
+      ],
+      "submittedAt": "2025-08-09 14:30:00",
+      "guestName": "Kanye Wesley",
+      "listingName": "3A SE1 - Borough Market Loft",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7457,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 10,
+      "publicReview": "Would definitely recommend to friends.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 10
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-08-09 14:30:00",
+      "guestName": "Kanye Wesley",
+      "listingName": "3A SE1 - Borough Market Loft",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7458,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 10,
+      "publicReview": "Would definitely recommend to friends.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 10
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-08-09 14:30:00",
+      "guestName": "Kanye Wesley",
+      "listingName": "3A SE1 - Borough Market Loft",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7459,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 10,
+      "publicReview": "Would definitely recommend to friends.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 10
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-08-09 14:30:00",
+      "guestName": "Kanye Wesley",
+      "listingName": "3A SE1 - Borough Market Loft",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7463,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 3,
+      "publicReview": "It was good but no hot water in the shower this morning.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 2.5
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-08-09 14:30:00",
+      "guestName": "Kanye Wesley",
+      "listingName": "3A SE1 - Borough Market Loft",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7468,
+      "type": "host-to-guest",
+      "status": "published",
+      "rating": 3,
+      "publicReview": "It was good but no hot water in the shower this morning.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 2.5
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-08-09 14:30:00",
+      "guestName": "Kanye Wesley",
+      "listingName": "3A SE1 - Borough Market Loft",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7469,
+      "type": "host-to-guest",
+      "status": "published",
+      "rating": 3,
+      "publicReview": "It was good but no hot water in the shower this morning.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 2.5
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-08-09 14:30:00",
+      "guestName": "Kanye Wesley",
+      "listingName": "3A SE1 - Borough Market Loft",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7488,
+      "type": "host-to-guest",
+      "status": "published",
+      "rating": 3,
+      "publicReview": "It was good but no hot water in the shower this morning.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 2.5
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-08-09 14:30:00",
+      "guestName": "Kanye Wesley",
+      "listingName": "3A SE1 - Borough Market Loft",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7498,
+      "type": "host-to-guest",
+      "status": "published",
+      "rating": 3,
+      "publicReview": "It was good but no hot water in the shower this morning.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 2.5
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-08-09 14:30:00",
+      "guestName": "Kanye Wesley",
+      "listingName": "3A SE1 - Borough Market Loft",
+      "channel": "airbnb"
+    }
+  ]
+}

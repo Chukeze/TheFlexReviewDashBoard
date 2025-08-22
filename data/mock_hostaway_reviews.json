@@ -1,0 +1,1052 @@
+[
+  {
+    "id": 7000,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": null,
+    "publicReview": "Would definitely recommend to friends.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 7
+      },
+      {
+        "category": "communication",
+        "rating": 6
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 10
+      }
+    ],
+    "submittedAt": "2023-12-09 14:30:00",
+    "guestName": "Jamie Lee",
+    "listingName": "3A SE1 - Borough Market Loft",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7001,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": null,
+    "publicReview": "Comfortable bed and modern amenities.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 10
+      },
+      {
+        "category": "communication",
+        "rating": 6
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 10
+      }
+    ],
+    "submittedAt": "2023-02-07 14:30:00",
+    "guestName": "Alex Morgan",
+    "listingName": "1C W2 - Bayswater Studio",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7002,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 6,
+    "publicReview": "Nice place, but a bit noisy at night.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 7
+      },
+      {
+        "category": "communication",
+        "rating": 9
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 8
+      }
+    ],
+    "submittedAt": "2024-10-09 14:30:00",
+    "guestName": "Jordan Kim",
+    "listingName": "1C W2 - Bayswater Studio",
+    "channel": "booking"
+  },
+  {
+    "id": 7003,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": null,
+    "publicReview": "The team was responsive and friendly.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 8
+      },
+      {
+        "category": "communication",
+        "rating": 10
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 8
+      }
+    ],
+    "submittedAt": "2023-02-13 14:30:00",
+    "guestName": "Casey Nguyen",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7004,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 10,
+    "publicReview": "Great communication. The apartment was spotless.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 8
+      },
+      {
+        "category": "communication",
+        "rating": 10
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 7
+      }
+    ],
+    "submittedAt": "2024-02-18 14:30:00",
+    "guestName": "Jamie Lee",
+    "listingName": "3A SE1 - Borough Market Loft",
+    "channel": "direct"
+  },
+  {
+    "id": 7005,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": null,
+    "publicReview": "Cozy flat, had everything we needed.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 6
+      },
+      {
+        "category": "communication",
+        "rating": 9
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 8
+      }
+    ],
+    "submittedAt": "2024-02-28 14:30:00",
+    "guestName": "Jordan Kim",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "booking"
+  },
+  {
+    "id": 7006,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 6,
+    "publicReview": "Check-in was smooth, and the host was helpful.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 10
+      },
+      {
+        "category": "communication",
+        "rating": 7
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 10
+      }
+    ],
+    "submittedAt": "2024-04-22 14:30:00",
+    "guestName": "Casey Nguyen",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "direct"
+  },
+  {
+    "id": 7007,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 7,
+    "publicReview": "Cozy flat, had everything we needed.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 8
+      },
+      {
+        "category": "communication",
+        "rating": 6
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 7
+      }
+    ],
+    "submittedAt": "2024-05-21 14:30:00",
+    "guestName": "Riley Chen",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7008,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 8,
+    "publicReview": "The team was responsive and friendly.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 7
+      },
+      {
+        "category": "communication",
+        "rating": 9
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 9
+      }
+    ],
+    "submittedAt": "2023-04-19 14:30:00",
+    "guestName": "Sam Patel",
+    "listingName": "1C W2 - Bayswater Studio",
+    "channel": "direct"
+  },
+  {
+    "id": 7009,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 8,
+    "publicReview": "Cozy flat, had everything we needed.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 10
+      },
+      {
+        "category": "communication",
+        "rating": 9
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 10
+      }
+    ],
+    "submittedAt": "2023-04-24 14:30:00",
+    "guestName": "Sam Patel",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "booking"
+  },
+  {
+    "id": 7010,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 6,
+    "publicReview": "Great communication. The apartment was spotless.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 7
+      },
+      {
+        "category": "communication",
+        "rating": 7
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 9
+      }
+    ],
+    "submittedAt": "2025-08-03 14:30:00",
+    "guestName": "Taylor Smith",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "direct"
+  },
+  {
+    "id": 7011,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 10,
+    "publicReview": "Cozy flat, had everything we needed.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 6
+      },
+      {
+        "category": "communication",
+        "rating": 6
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 10
+      }
+    ],
+    "submittedAt": "2025-08-17 14:30:00",
+    "guestName": "Chris Johnson",
+    "listingName": "1C W2 - Bayswater Studio",
+    "channel": "booking"
+  },
+  {
+    "id": 7012,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": null,
+    "publicReview": "Great communication. The apartment was spotless.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 8
+      },
+      {
+        "category": "communication",
+        "rating": 10
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 7
+      }
+    ],
+    "submittedAt": "2024-03-15 14:30:00",
+    "guestName": "Sam Patel",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "direct"
+  },
+  {
+    "id": 7013,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": null,
+    "publicReview": "Loved the location and the easy check-in. Would stay again!",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 8
+      },
+      {
+        "category": "communication",
+        "rating": 7
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 10
+      }
+    ],
+    "submittedAt": "2025-09-20 14:30:00",
+    "guestName": "Sam Patel",
+    "listingName": "3A SE1 - Borough Market Loft",
+    "channel": "direct"
+  },
+  {
+    "id": 7014,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 8,
+    "publicReview": "Great communication. The apartment was spotless.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 7
+      },
+      {
+        "category": "communication",
+        "rating": 6
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 7
+      }
+    ],
+    "submittedAt": "2024-01-04 14:30:00",
+    "guestName": "Casey Nguyen",
+    "listingName": "3A SE1 - Borough Market Loft",
+    "channel": "direct"
+  },
+  {
+    "id": 7015,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": null,
+    "publicReview": "Comfortable bed and modern amenities.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 9
+      },
+      {
+        "category": "communication",
+        "rating": 10
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 7
+      }
+    ],
+    "submittedAt": "2023-09-25 14:30:00",
+    "guestName": "Riley Chen",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "booking"
+  },
+  {
+    "id": 7016,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 7,
+    "publicReview": "Comfortable bed and modern amenities.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 8
+      },
+      {
+        "category": "communication",
+        "rating": 9
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 8
+      }
+    ],
+    "submittedAt": "2023-09-25 14:30:00",
+    "guestName": "Chris Johnson",
+    "listingName": "3A SE1 - Borough Market Loft",
+    "channel": "booking"
+  },
+  {
+    "id": 7017,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 10,
+    "publicReview": "Loved the location and the easy check-in. Would stay again!",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 10
+      },
+      {
+        "category": "communication",
+        "rating": 7
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 10
+      }
+    ],
+    "submittedAt": "2023-04-03 14:30:00",
+    "guestName": "Jamie Lee",
+    "listingName": "1C W2 - Bayswater Studio",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7018,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 6,
+    "publicReview": "The team was responsive and friendly.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 10
+      },
+      {
+        "category": "communication",
+        "rating": 7
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 8
+      }
+    ],
+    "submittedAt": "2023-02-02 14:30:00",
+    "guestName": "Alex Morgan",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "direct"
+  },
+  {
+    "id": 7019,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 7,
+    "publicReview": "Great communication. The apartment was spotless.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 9
+      },
+      {
+        "category": "communication",
+        "rating": 9
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 7
+      }
+    ],
+    "submittedAt": "2023-12-19 14:30:00",
+    "guestName": "Morgan Brown",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7020,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 6,
+    "publicReview": "Cozy flat, had everything we needed.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 6
+      },
+      {
+        "category": "communication",
+        "rating": 6
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 9
+      }
+    ],
+    "submittedAt": "2024-07-14 14:30:00",
+    "guestName": "Chris Johnson",
+    "listingName": "3A SE1 - Borough Market Loft",
+    "channel": "direct"
+  },
+  {
+    "id": 7021,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 9,
+    "publicReview": "Great communication. The apartment was spotless.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 7
+      },
+      {
+        "category": "communication",
+        "rating": 8
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 9
+      }
+    ],
+    "submittedAt": "2023-04-18 14:30:00",
+    "guestName": "Jordan Kim",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7022,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 6,
+    "publicReview": "The team was responsive and friendly.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 6
+      },
+      {
+        "category": "communication",
+        "rating": 7
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 7
+      }
+    ],
+    "submittedAt": "2023-01-21 14:30:00",
+    "guestName": "Morgan Brown",
+    "listingName": "1C W2 - Bayswater Studio",
+    "channel": "booking"
+  },
+  {
+    "id": 7023,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 9,
+    "publicReview": "Comfortable bed and modern amenities.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 8
+      },
+      {
+        "category": "communication",
+        "rating": 9
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 8
+      }
+    ],
+    "submittedAt": "2024-01-06 14:30:00",
+    "guestName": "Jordan Kim",
+    "listingName": "1C W2 - Bayswater Studio",
+    "channel": "booking"
+  },
+  {
+    "id": 7024,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": null,
+    "publicReview": "Cozy flat, had everything we needed.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 6
+      },
+      {
+        "category": "communication",
+        "rating": 10
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 10
+      }
+    ],
+    "submittedAt": "2023-04-10 14:30:00",
+    "guestName": "Riley Chen",
+    "listingName": "3A SE1 - Borough Market Loft",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7025,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 10,
+    "publicReview": "Nice place, but a bit noisy at night.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 7
+      },
+      {
+        "category": "communication",
+        "rating": 6
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 10
+      }
+    ],
+    "submittedAt": "2025-08-17 14:30:00",
+    "guestName": "Alex Morgan",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7026,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": null,
+    "publicReview": "Would definitely recommend to friends.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 6
+      },
+      {
+        "category": "communication",
+        "rating": 10
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 7
+      }
+    ],
+    "submittedAt": "2023-11-28 14:30:00",
+    "guestName": "Avery Davis",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "direct"
+  },
+  {
+    "id": 7027,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 10,
+    "publicReview": "Cozy flat, had everything we needed.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 8
+      },
+      {
+        "category": "communication",
+        "rating": 8
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 7
+      }
+    ],
+    "submittedAt": "2023-07-22 14:30:00",
+    "guestName": "Avery Davis",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "direct"
+  },
+  {
+    "id": 7028,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 9,
+    "publicReview": "Would definitely recommend to friends.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 8
+      },
+      {
+        "category": "communication",
+        "rating": 6
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 6
+      }
+    ],
+    "submittedAt": "2024-03-22 14:30:00",
+    "guestName": "Sam Patel",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "booking"
+  },
+  {
+    "id": 7029,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 7,
+    "publicReview": "Fantastic stay, very clean and well-located.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 8
+      },
+      {
+        "category": "communication",
+        "rating": 6
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 7
+      }
+    ],
+    "submittedAt": "2023-09-07 14:30:00",
+    "guestName": "Jamie Lee",
+    "listingName": "3A SE1 - Borough Market Loft",
+    "channel": "booking"
+  },
+  {
+    "id": 7030,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 10,
+    "publicReview": "Great communication. The apartment was spotless.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 6
+      },
+      {
+        "category": "communication",
+        "rating": 10
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 8
+      }
+    ],
+    "submittedAt": "2025-12-10 14:30:00",
+    "guestName": "Riley Chen",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "direct"
+  },
+  {
+    "id": 7031,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 8,
+    "publicReview": "Cozy flat, had everything we needed.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 8
+      },
+      {
+        "category": "communication",
+        "rating": 10
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 7
+      }
+    ],
+    "submittedAt": "2023-02-24 14:30:00",
+    "guestName": "Sam Patel",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "direct"
+  },
+  {
+    "id": 7032,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 6,
+    "publicReview": "Loved the location and the easy check-in. Would stay again!",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 6
+      },
+      {
+        "category": "communication",
+        "rating": 9
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 8
+      }
+    ],
+    "submittedAt": "2025-08-09 14:30:00",
+    "guestName": "Sam Patel",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7033,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 10,
+    "publicReview": "Great communication. The apartment was spotless.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 9
+      },
+      {
+        "category": "communication",
+        "rating": 10
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 6
+      }
+    ],
+    "submittedAt": "2025-05-06 14:30:00",
+    "guestName": "Taylor Smith",
+    "listingName": "1C W2 - Bayswater Studio",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7034,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 10,
+    "publicReview": "Fantastic stay, very clean and well-located.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 7
+      },
+      {
+        "category": "communication",
+        "rating": 9
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 7
+      }
+    ],
+    "submittedAt": "2025-01-27 14:30:00",
+    "guestName": "Taylor Smith",
+    "listingName": "3A SE1 - Borough Market Loft",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7035,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": null,
+    "publicReview": "Would definitely recommend to friends.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 6
+      },
+      {
+        "category": "communication",
+        "rating": 8
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 10
+      }
+    ],
+    "submittedAt": "2024-04-22 14:30:00",
+    "guestName": "Alex Morgan",
+    "listingName": "1C W2 - Bayswater Studio",
+    "channel": "booking"
+  },
+  {
+    "id": 7036,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 9,
+    "publicReview": "Check-in was smooth, and the host was helpful.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 6
+      },
+      {
+        "category": "communication",
+        "rating": 7
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 8
+      }
+    ],
+    "submittedAt": "2023-03-26 14:30:00",
+    "guestName": "Taylor Smith",
+    "listingName": "3A SE1 - Borough Market Loft",
+    "channel": "booking"
+  },
+  {
+    "id": 7037,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 9,
+    "publicReview": "Fantastic stay, very clean and well-located.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 7
+      },
+      {
+        "category": "communication",
+        "rating": 7
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 9
+      }
+    ],
+    "submittedAt": "2025-02-13 14:30:00",
+    "guestName": "Taylor Smith",
+    "listingName": "1C W2 - Bayswater Studio",
+    "channel": "booking"
+  },
+  {
+    "id": 7038,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 8,
+    "publicReview": "Comfortable bed and modern amenities.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 6
+      },
+      {
+        "category": "communication",
+        "rating": 8
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 8
+      }
+    ],
+    "submittedAt": "2023-11-07 14:30:00",
+    "guestName": "Jordan Kim",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "direct"
+  },
+  {
+    "id": 7039,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 8,
+    "publicReview": "Great communication. The apartment was spotless.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 7
+      },
+      {
+        "category": "communication",
+        "rating": 10
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 8
+      }
+    ],
+    "submittedAt": "2024-01-04 14:30:00",
+    "guestName": "Morgan Brown",
+    "listingName": "1C W2 - Bayswater Studio",
+    "channel": "airbnb"
+  },
+  {
+    "id": 7453,
+    "type": "host-to-guest",
+    "status": "published",
+    "rating": null,
+    "publicReview": "Shane and family are wonderful! Would definitely host again :)",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 10
+      },
+      {
+        "category": "communication",
+        "rating": 10
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 10
+      }
+    ],
+    "submittedAt": "2020-08-21 22:45:14",
+    "guestName": "Shane Finkelstein",
+    "listingName": "2B N1 A - 29 Shoreditch Heights",
+    "channel": "direct"
+  },
+  {
+    "id": 7454,
+    "type": "guest-to-host",
+    "status": "published",
+    "rating": 10,
+    "publicReview": "Would definitely recommend to friends.",
+    "reviewCategory": [
+      {
+        "category": "cleanliness",
+        "rating": 10
+      },
+      {
+        "category": "communication",
+        "rating": 10
+      },
+      {
+        "category": "respect_house_rules",
+        "rating": 10
+      }
+    ],
+    "submittedAt": "2025-08-09 14:30:00",
+    "guestName": "Kanye Wesley",
+    "listingName": "3A SE1 - Borough Market Loft",
+    "channel": "airbnb"
+  }
+]

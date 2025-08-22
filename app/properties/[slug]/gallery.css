@@ -1,0 +1,131 @@
+/* ---- The Flex light palette (tweak if needed) ---- */
+:root{
+    --brand-700:#284E4C;
+    --brand-50:#F1F3EE;
+    --ink-900:#333333;
+    --ink-700:#5C5C5A;
+    --surface:#ffffff;
+    --ring: rgba(40,78,76,.25);
+    --shadow: 0 4px 20px rgba(0,0,0,.12);
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --gap: 3px;
+  }
+  
+  /* Utility */
+  .visually-hidden{
+    position:absolute!important; clip:rect(1px,1px,1px,1px);
+    height:1px;width:1px;overflow:hidden;white-space:nowrap;
+  }
+  
+  /* ---- Gallery root ---- */
+  .gallery{ position:relative; }
+  .gallery-grid > * {
+    margin: 0;
+  }
+  /* MOBILE: horizontal slider (shown < 768px) */
+  .gallery__mobile{ display:block; position:relative; }
+  .gallery__viewport{
+    overflow-x:auto; overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .gallery__track{
+    display:flex;
+    gap:4px;
+    padding-left:4px; /* same as gap so left edge aligns */
+  }
+  .gallery__slide{
+    position:relative;
+    flex:0 0 100%;
+    scroll-snap-align:start;
+  }
+  .gallery__ratio{
+    position:relative; width:100%; padding-bottom:75%; /* 4:3 */
+  }
+  .gallery__imgwrap{
+    position:absolute; inset:0; overflow:hidden; border-radius:var(--radius-xl);
+  }
+  .gallery__img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  
+  /* Nav & chrome */
+  .gallery__nav{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:36px; height:36px; border-radius:999px; border:0;
+    background:rgba(255,255,255,.92);
+    box-shadow:var(--shadow); display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  .gallery__nav:focus{ outline:2px solid var(--ring); outline-offset:2px; }
+  .gallery__nav--prev{ left:16px; }
+  .gallery__nav--next{ right:16px; }
+  
+  .gallery__counter{
+    position:absolute; top:12px; right:12px;
+    background:rgba(0,0,0,.6); color:#fff;
+    padding:6px 10px; border-radius:999px; font:500 14px/1.1 system-ui, sans-serif;
+    backdrop-filter: blur(4px);
+  }
+  .gallery__viewall{
+    position:absolute; left:16px; bottom:16px;
+    background:rgba(255,255,255,.92);
+    border:0; border-radius:8px; padding:6px 10px;
+    box-shadow:var(--shadow); cursor:pointer; font:600 12px/1 system-ui,sans-serif;
+  }
+  .gallery__viewall svg{ margin-right:6px; }
+  
+  /* DESKTOP: collage (≥ 768px) */
+  .gallery__desktop{ display:none; }
+  @media (min-width:768px){
+    .gallery__mobile{ display:none; }
+    .gallery__desktop{ display:block; position:relative; }
+    .gallery-grid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: var(--gap, 8px);
+      height: 600px;
+    }
+    .gallery-grid__item{
+      position:relative; overflow:hidden; border-radius:var(--radius-lg);
+    }
+    .gallery-grid__item img{
+      width:100%; height:100%; object-fit:cover; display:block;
+      transition: transform .25s ease;
+    }
+    .gallery-grid__item:hover img{ transform: scale(1.02); }
+    .gallery-grid__item--main{
+      grid-column: 1 / span 2; grid-row: 1 / span 2;
+      border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+    }
+    .gallery-grid__item--tr{ border-top-right-radius: var(--radius-xl); }
+    .gallery-grid__overlay{
+      position:absolute; inset:0; background:rgba(0,0,0,.1);
+      transition: background .2s ease;
+      border-radius: inherit;
+    }
+    .gallery-grid__item:hover .gallery-grid__overlay{ background:rgba(0,0,0,.2); }
+    .gallery-grid__cta{
+      position:absolute; right:24px; bottom:24px;
+      background:#fff; color:#222; border:0; border-radius:10px;
+      padding:10px 14px; box-shadow:var(--shadow); font:600 13px/1 system-ui,sans-serif;
+      display:flex; align-items:center; gap:8px; cursor:pointer;
+    }
+  }
+  
+  /* Optional: brand‑colored icon pills if you want to reuse */
+  .icon-pill{
+    background:var(--surface);
+    color:var(--brand-700);
+    border-radius:999px; padding:6px 10px;
+    box-shadow:var(--shadow);
+  }
+  
+  /* Focus ring for all actionable elements inside gallery */
+  .gallery button:focus-visible{
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  
