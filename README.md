@@ -50,6 +50,7 @@ Returns `{ approved: string[] }`
 - Ratings from category items (0–10) are converted to a 0–5 scale and averaged when the overall is missing.
 - Server components are used where convenient; the dashboard is a client page for interactive filters.
 - For Google Reviews exploration, see `docs/GOOGLE_REVIEWS.md`.
+- For Key design and logic decisions, see `docs/Decisions.md`.
 
 ## Folder structure
 ```
