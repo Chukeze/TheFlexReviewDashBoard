@@ -1,4 +1,4 @@
-// lib/hostawayAuth.ts
+
 let cachedToken: { token: string; expiresAt: number } | null = null
 
 export async function getHostawayAccessToken() {
@@ -7,8 +7,8 @@ export async function getHostawayAccessToken() {
 
   const body = new URLSearchParams({
     grant_type: 'client_credentials',
-    client_id: process.env.HOSTAWAY_ACCOUNT_ID!, // e.g., 61148 (from brief)
-    client_secret: process.env.HOSTAWAY_API_KEY!, // from brief/dashboard
+    client_id: process.env.HOSTAWAY_ACCOUNT_ID!, 
+    client_secret: process.env.HOSTAWAY_API_KEY!, 
     scope: 'general',
   })
 
@@ -27,4 +27,20 @@ export async function getHostawayAccessToken() {
     expiresAt: Date.now() + json.expires_in * 1000,
   }
   return json.access_token
+}
+
+
+
+export async function fetchHostawayReviews(params: URLSearchParams) {
+  const token = await getHostawayAccessToken()
+  const url = new URL(
+    'https://api.hostaway.com/v1/reviews?' + params.toString()
+  )
+  // Forward selected filters to Hostaway if you like
+  const res = await fetch(url.toString(), {
+    headers: { Authorization: `Bearer ${token}`, 'Cache-control': 'no-cache' },
+  })
+  const json = await res.json()
+  // Hostaway’s standard shape has { status, result: Review[] } — normalize next:
+  return json.result ?? []
 }
