@@ -1,7 +1,7 @@
 import { Aggregates, NormalizedReview } from './types';
 
 export function buildAggregates(items: NormalizedReview[]): Aggregates {
-  const byListing: Aggregates['byListing'] = {};
+  const byListing: Aggregates['reviewsByListing'] = {};
   const byChannel: Aggregates['byChannel'] = {};
   const catSum: Record<string, { sum: number; count: number }> = {};
   const monthMap: Record<string, { sum: number; count: number }> = {};
@@ -48,5 +48,5 @@ export function buildAggregates(items: NormalizedReview[]): Aggregates {
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([month, s]) => ({ month, avg: Number((s.sum / Math.max(1, s.count)).toFixed(2)), count: s.count }));
 
-  return { byListing, byChannel, byCategory, timelineMonthly };
+  return { reviewsByListing: byListing, byChannel, byCategory, timelineMonthly };
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { Review, Aggregates } from '@/lib/types'
+import { Review, Aggregates, DerivedMetrics } from '@/lib/types'
 import { mean, zClass, bayesianScore } from '@/lib/utils'
 import { useMemo } from 'react'
 
@@ -9,7 +9,7 @@ export default function Kpis({
   data,
   loading,
 }: {
-  derived: ReturnType<typeof useMemo> | null
+  derived: DerivedMetrics | null
   data: { reviews: Review[]; aggregates: Aggregates } | undefined | null
   loading: boolean
 }) {
