@@ -363,7 +363,7 @@ export default function Dashboard() {
       globalAvg,
       ttr,
     }
-  }, [reviewsPayload, approved, presetWindowDays])
+  }, [reviewsPayload, approved, presetWindowDays, hasCustomRange, hasPreset, from, to])
 
   const filteredReviews = useMemo(() => {
     if (!reviewsPayload?.reviews) return []
