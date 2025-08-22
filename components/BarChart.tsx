@@ -8,11 +8,7 @@ export default function BarChart({
 }) {
   const hostRef = useRef<HTMLDivElement>(null)
   const [w, setW] = useState(800)
-  const h = 360
-  const padL = 44,
-    padR = 20,
-    padB = 46,
-    padT = 20
+
 
   useEffect(() => {
     if (!hostRef.current) return
@@ -22,7 +18,12 @@ export default function BarChart({
     ro.observe(hostRef.current)
     return () => ro.disconnect()
   }, [])
-
+  
+  const h = 360
+  const padL = 44,
+    padR = 20,
+    padB = 46,
+    padT = 20
   const max = Math.max(1, ...items.map((i) => i.value))
   const innerW = Math.max(200, w - padL - padR)
   const innerH = h - padT - padB

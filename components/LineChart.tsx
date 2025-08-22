@@ -6,16 +6,9 @@ export default function LineChart({
 }: {
   points: Array<{ month: string; avg: number }>
 }) {
-  if (!points?.length) return <p className="muted">No data.</p>
 
   const hostRef = useRef<HTMLDivElement>(null)
   const [w, setW] = useState(800)
-  const h = 360
-  const padL = 44,
-    padR = 16,
-    padB = 46,
-    padT = 20
-
   useEffect(() => {
     if (!hostRef.current) return
     const ro = new ResizeObserver(([e]) =>
@@ -32,6 +25,16 @@ export default function LineChart({
     const step = Math.ceil(points.length / maxPts)
     return points.filter((_, i) => i % step === 0)
   }, [points])
+
+
+  const h = 360
+  const padL = 44,
+    padR = 16,
+    padB = 46,
+    padT = 20
+
+
+    if (!points?.length) return <p className="muted">No data.</p>
 
   const innerW = Math.max(200, w - padL - padR)
   const innerH = h - padT - padB
@@ -113,7 +116,6 @@ export default function LineChart({
   )
 }
 
-// /* 'use client'
 
 // type Pt = { month: string; avg: number }
 

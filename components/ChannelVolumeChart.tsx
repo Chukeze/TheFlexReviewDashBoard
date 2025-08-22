@@ -8,15 +8,8 @@ export default function ChannelVolumeChart({
   points: { month: string; counts: Record<string, number> }[]
   channels: string[]
 }) {
-  if (!points.length) return <p className="muted">No data.</p>
-
   const hostRef = useRef<HTMLDivElement>(null)
   const [w, setW] = useState(820)
-  const h = 360
-  const padL = 48,
-    padR = 20,
-    padB = 60,
-    padT = 20
 
   useEffect(() => {
     if (!hostRef.current) return
@@ -26,6 +19,16 @@ export default function ChannelVolumeChart({
     ro.observe(hostRef.current)
     return () => ro.disconnect()
   }, [])
+  
+  if (!points.length) return <p className="muted">No data.</p>
+
+  const h = 360
+  const padL = 48,
+    padR = 20,
+    padB = 60,
+    padT = 20
+
+
 
   const months = points.map((p) => p.month)
   const innerW = Math.max(200, w - padL - padR)
