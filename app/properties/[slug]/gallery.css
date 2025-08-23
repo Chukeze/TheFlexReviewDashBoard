@@ -1,4 +1,4 @@
-/* ---- The Flex light palette (tweak if needed) ---- */
+/* ---- The Flex light palette ---- */
 :root{
     --brand-700:#284E4C;
     --brand-50:#F1F3EE;
@@ -115,7 +115,7 @@
     }
   }
   
-  /* Optional: brand‑colored icon pills if you want to reuse */
+  /* brand‑colored icon pills for reuse */
   .icon-pill{
     background:var(--surface);
     color:var(--brand-700);

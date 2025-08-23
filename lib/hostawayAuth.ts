@@ -36,7 +36,7 @@ export async function fetchHostawayReviews(params: URLSearchParams) {
   const url = new URL(
     'https://api.hostaway.com/v1/reviews?' + params.toString()
   )
-  // Forward selected filters to Hostaway if you like
+  // Forward selected filters to Hostaway
   const res = await fetch(url.toString(), {
     headers: { Authorization: `Bearer ${token}`, 'Cache-control': 'no-cache' },
   })

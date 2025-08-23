@@ -12,7 +12,7 @@ export default function PropertyDetails() {
     `Located in Finsbury, this spacious apartment is perfect for your stay. ` +
     `The location is great – close to public transport, local shops, and parks. ` +
     `It’s fully equipped with quality amenities to ensure a comfortable stay. ` +
-    `I’ve made sure everything is clean, tidy, and ready for you to enjoy. If you need...`
+    `I’ve made sure everything is clean, tidy, and ready for you to enjoy. If you need`
 
   return (
     <>

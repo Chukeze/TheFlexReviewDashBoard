@@ -98,7 +98,7 @@ export default function StayPolicy() {
           <div className="fx-tile">
             <p className="fx-value">For stays of 28 days or more</p>
             <p className="fx-label">
-              {' '}
+             
               Full refund up to 24 hours before check-in
             </p>
           </div>

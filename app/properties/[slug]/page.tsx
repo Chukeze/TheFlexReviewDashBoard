@@ -270,7 +270,7 @@ export default async function PropertyPage({
             ))}
           </div>
         </main>
-        {/* Right column: placeholder booking card (visual parity with Flex) */}
+        {/* Right column: placeholder booking card */}
         <aside>
           <div className="booking">
             <div
