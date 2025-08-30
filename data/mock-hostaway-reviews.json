@@ -333,7 +333,7 @@
           "rating": 9.5
         }
       ],
-      "submittedAt": "2025-08-09 14:30:00",
+      "submittedAt": "2025-08-12 14:30:00",
       "guestName": "Kanye Wesley",
       "listingName": "3A SE1 - Borough Market Loft",
       "channel": "airbnb"
@@ -358,7 +358,7 @@
           "rating": 10
         }
       ],
-      "submittedAt": "2025-08-09 14:30:00",
+      "submittedAt": "2025-07-29 14:30:00",
       "guestName": "Kanye Wesley",
       "listingName": "3A SE1 - Borough Market Loft",
       "channel": "airbnb"
@@ -419,7 +419,7 @@
           "rating": 9.5
         }
       ],
-      "submittedAt": "2025-08-09 14:30:00",
+      "submittedAt": "2025-07-09 14:30:00",
       "guestName": "Kanye Wesley",
       "listingName": "3A SE1 - Borough Market Loft",
       "channel": "airbnb"
@@ -480,7 +480,7 @@
           "rating": 9.5
         }
       ],
-      "submittedAt": "2025-08-09 14:30:00",
+      "submittedAt": "2025-08-02 14:30:00",
       "guestName": "Kanye Wesley",
       "listingName": "3A SE1 - Borough Market Loft",
       "channel": "airbnb"
@@ -541,7 +541,7 @@
           "rating": 9.5
         }
       ],
-      "submittedAt": "2025-08-09 14:30:00",
+      "submittedAt": "2025-08-19 14:30:00",
       "guestName": "Kanye Wesley",
       "listingName": "3A SE1 - Borough Market Loft",
       "channel": "airbnb"
@@ -602,7 +602,7 @@
           "rating": 9.5
         }
       ],
-      "submittedAt": "2025-08-09 14:30:00",
+      "submittedAt": "2025-08-07 14:30:00",
       "guestName": "Kanye Wesley",
       "listingName": "3A SE1 - Borough Market Loft",
       "channel": "airbnb"
@@ -663,7 +663,7 @@
           "rating": 9.5
         }
       ],
-      "submittedAt": "2025-08-09 14:30:00",
+      "submittedAt": "2025-08-19 14:30:00",
       "guestName": "Kanye Wesley",
       "listingName": "3A SE1 - Borough Market Loft",
       "channel": "airbnb"
@@ -724,7 +724,7 @@
           "rating": 9.5
         }
       ],
-      "submittedAt": "2025-08-09 14:30:00",
+      "submittedAt": "2025-08-08 14:30:00",
       "guestName": "Kanye Wesley",
       "listingName": "3A SE1 - Borough Market Loft",
       "channel": "airbnb"
@@ -849,6 +849,311 @@
       "submittedAt": "2025-08-09 14:30:00",
       "guestName": "Kanye Wesley",
       "listingName": "3A SE1 - Borough Market Loft",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7500,
+      "type": "host-to-guest",
+      "status": "published",
+      "rating": 3,
+      "publicReview": "Great location and comfy bed. The cold shower was a surprise, but everything else made up for it.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 2.5
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-08-23 14:30:00",
+      "guestName": "Kaye Weden",
+      "listingName": "2Br Finsbury Gardens Apt",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7600,
+      "type": "host-to-guest",
+      "status": "published",
+      "rating": 3,
+      "publicReview": "Great location and comfy bed. The cold shower was a surprise, but everything else made up for it.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 8
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 1
+        },
+        {
+          "category": "noise",
+          "rating": 3
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 2.5
+        },
+        {
+          "category": "amenities",
+          "rating": 4
+        },
+        {
+          "category": "design",
+          "rating": 8
+        },
+        {
+          "category": "comfort",
+          "rating": 1
+        },
+        {
+          "category": "wifi",
+          "rating": 3.5
+        }
+      ],
+      "submittedAt": "2025-06-23 14:30:00",
+      "guestName": "Justin Ford",
+      "listingName": "2Br Ridge Gardens Apt",
+      "channel": "vrbo"
+    },
+    {
+      "id": 7501,
+      "type": "host-to-guest",
+      "status": "published",
+      "rating": 3,
+      "publicReview": "Loved the ambiance and service. The hot water issue was minor compared to the great experience.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 2.5
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-07-23 14:30:00",
+      "guestName": "Kevin Wilson",
+      "listingName": "2Br Finsbury Gardens Apt",
+      "channel": "booking"
+    },
+    {
+      "id": 7502,
+      "type": "host-to-guest",
+      "status": "published",
+      "rating": 3,
+      "publicReview": "Everything was smooth except the shower. Still, I’d come back for the hospitality alone.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 2.5
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-08-03 14:30:00",
+      "guestName": "Margine Pie",
+      "listingName": "2Br Finsbury Gardens Apt",
+      "channel": "airbnb"
+    },
+    {
+      "id": 7508,
+      "type": "host-to-guest",
+      "status": "published",
+      "rating": 3,
+      "publicReview": "The decor was charming and the vibe relaxing. Hot water issue was unfortunate but temporary.",
+      "reviewCategory": [
+        {
+          "category": "cleanliness",
+          "rating": 10
+        },
+        {
+          "category": "communication",
+          "rating": 10
+        },
+        {
+          "category": "respect_house_rules",
+          "rating": 10
+        },
+        {
+          "category": "location",
+          "rating": 10
+        },
+        {
+          "category": "noise",
+          "rating": 8
+        },
+        {
+          "category": "check_in",
+          "rating": 7
+        },
+        {
+          "category": "value",
+          "rating": 8
+        },
+        {
+          "category": "bathroom",
+          "rating": 2.5
+        },
+        {
+          "category": "amenities",
+          "rating": 10
+        },
+        {
+          "category": "design",
+          "rating": 10
+        },
+        {
+          "category": "comfort",
+          "rating": 10
+        },
+        {
+          "category": "wifi",
+          "rating": 9.5
+        }
+      ],
+      "submittedAt": "2025-08-13 14:30:00",
+      "guestName": "Margot Pie",
+      "listingName": "2Br Finsbury Gardens Apt",
       "channel": "airbnb"
     }
   ]

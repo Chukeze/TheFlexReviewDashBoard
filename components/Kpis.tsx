@@ -41,7 +41,7 @@ export default function Kpis({
     .sort((a, b) => a.avg90 - b.avg90)[0]
 
   return (
-    <div className="grid cols-3">
+    <section className="grid cols-3">
       <div className="card">
         <div className="kpi">{total}</div>
         <div className="muted small">Total Reviews</div>
@@ -156,6 +156,6 @@ export default function Kpis({
           Higher σ = more variation in recent ratings
         </div>
       </div>
-    </div>
+    </section>
   )
 }

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useRef } from 'react'
 import Link from 'next/link'
 import {
   ChartType,
@@ -45,14 +45,17 @@ type ReviewFilterForSummaryView = {
   search?: string
 }
 
+type ReviewPayload = {
+  reviews: Review[]
+  aggregates: Aggregates
+}
+
 export default function Dashboard() {
   const [viewMode, setViewMode] = useState<ViewMode>('detailed')
   const [isLoading, setIsLoading] = useState(true)
+  const [notes, setNotes] = useState([]);
   const [error, setError] = useState<string | null>(null)
-  const [reviewsPayload, setReviewsPayload] = useState<{
-    reviews: Review[]
-    aggregates: Aggregates
-  } | null>(null)
+  const [reviewsPayload, setReviewsPayload] = useState<ReviewPayload | null>(null)
 
   //Filters
   const [channel, setChannel] = useState('')
@@ -68,8 +71,12 @@ export default function Dashboard() {
   const [approved, setApproved] = useState<Set<string>>(new Set())
   const [chart, setChart] = useState<ChartType>('trend')
   const [noticeMessage, setNoticeMessage] = useState<string>('')
+  const lastReqRef = useRef<symbol | null>(null);
 
-  const [reviewFilterForSummaryView, setReviewFilterForSummaryView] = useState<ReviewFilterForSummaryView>({})
+  const [reviewFilterForSummaryView, setReviewFilterForSummaryView] =
+    useState<ReviewFilterForSummaryView>({})
+
+  const [filteredReviewsForDetailedView, setFilteredReviewsForDetailedView] = useState()
 
   const queryString = useMemo(() => {
     const p = new URLSearchParams()
@@ -80,16 +87,40 @@ export default function Dashboard() {
     if (category) p.set('category', category)
     if (from) p.set('from', from)
     if (to) p.set('to', to)
+    if (!from && !to && presetWindowDays){
+      const end = new Date().toISOString()
+      const start = new Date(Date.now() - presetWindowDays * MS_DAY).toISOString()
+      p.set('from', start)
+      p.set('to', end)
+    }
     return p.toString()
-  }, [channel, listingId, minRating, maxRating, category, from, to])
+  }, [channel, listingId, minRating, maxRating, category, from, to, presetWindowDays])
 
+  
   useEffect(() => {
     setIsLoading(true)
-    fetch('/api/reviews/combined?' + queryString)
+    setError(null)
+
+    const abrtController = new AbortController()
+    const reqToken = Symbol()
+    lastReqRef.current = reqToken
+
+    fetch('/api/reviews/combined?' + queryString, {
+
+      signal: abrtController.signal,
+      cache: 'no-store',
+    })
       .then((r) => r.json())
-      .then(setReviewsPayload)
-      .catch((e) => setError(String(e)))
-      .finally(() => setIsLoading(false))
+      .then((payload) => {
+        if (lastReqRef.current !== reqToken) return; //ignore out-of-order responses
+        setReviewsPayload(payload)
+      })
+      .catch((e) => {
+        if (e?.name !== 'AbortError') setError(String(e))
+      })
+      .finally(() =>{ if (lastReqRef.current === reqToken) setIsLoading(false) });
+
+      return () => abrtController.abort()
   }, [queryString])
 
   useEffect(() => {
@@ -98,6 +129,7 @@ export default function Dashboard() {
       .then((j) => setApproved(new Set(j.approved || [])))
       .catch(() => {})
   }, [])
+
 
   const listings = useMemo(
     () =>
@@ -139,7 +171,8 @@ export default function Dashboard() {
     // map listingId -> reviews
     const reviewsByListing = new Map<string, Review[]>()
     for (const r of reviewsPayload.reviews) {
-      if (!reviewsByListing.has(r.listingId)) reviewsByListing.set(r.listingId, [])
+      if (!reviewsByListing.has(r.listingId))
+        reviewsByListing.set(r.listingId, [])
       reviewsByListing.get(r.listingId)!.push(r)
     }
     // ensure chronological for each listing
@@ -228,9 +261,43 @@ export default function Dashboard() {
         p.vol90 < VOL_MIN_90
     )
 
+    const inWindow = (iso: string) =>
+      inCurrentWindow(
+        iso,
+        hasCustomRange,
+        hasPreset,
+        presetWindowDays,
+        from,
+        to
+      )
+
+    const reviewsInWindow =
+      reviewsPayload?.reviews.filter((r) => inWindow(r.submittedAt)) || [];
+
+    const acc: Record<string, {sum: number; n: number}> ={}
+    for (const r of reviewsInWindow) {
+      const m = r.submittedAt.slice(0,7)
+      const a = (acc[m] ||= {sum: 0, n:0});
+      a.sum += r.overall
+      a.n += 1
+    }
+
+    const timelineMonthlyWindowed = Object.entries(acc)
+      .map(([month, {sum, n}]) => ({month, avg: sum / Math.max(1,n)}))
+      .sort((a,b) => a.month.localeCompare(b.month));
+
+
+
+    const bins = [0, 1, 2, 3, 4, 5]
+    const ratingDistribution = bins.map(
+      (b) =>
+        reviewsInWindow.filter((r) => r.overall >= b && r.overall < b + 1)
+          .length
+    )
+
     // volume by channel per month
     const monthChan: Record<string, Record<string, number>> = {}
-    for (const r of reviewsPayload.reviews) {
+    for (const r of reviewsInWindow) {
       const m = r.submittedAt.slice(0, 7)
       monthChan[m] ||= {}
       monthChan[m][r.channel] = (monthChan[m][r.channel] || 0) + 1
@@ -245,6 +312,7 @@ export default function Dashboard() {
       name: string
       count: number
     }> = []
+
     for (const [id, arr] of reviewsByListing.entries()) {
       const c = arr.filter((r) =>
         inCurrentWindow(
@@ -264,7 +332,7 @@ export default function Dashboard() {
       })
     }
     volReviewsByListing.sort((a, b) => b.count - a.count)
-
+    /*
     // rating distribution (0–1,1–2,...4–5)
     const bins = [0, 1, 2, 3, 4, 5]
     const ratingDistribution = bins.map(
@@ -273,24 +341,61 @@ export default function Dashboard() {
           (r) => r.overall >= b && r.overall < b + 1
         ).length
     )
+*/
+
+    const effW =
+      hasCustomRange && from && to
+        ? Math.max(
+            1,
+            Math.ceil(
+              (new Date(to).getTime() - new Date(from).getTime()) / MS_DAY
+            )
+          )
+        : presetWindowDays ?? 90
+
+    const fromTs = from ? new Date(from).getTime() : null
+    const toTs = to ? new Date(to).getTime() : null
+
+    const isInCurrent = (ts: number) => {
+      if (hasCustomRange) {
+        if (fromTs && ts < fromTs) return false
+        if (toTs && ts > toTs) return false
+        return true
+      }
+      return now() - ts <= effW * MS_DAY
+    }
+
+    const isInPrior = (ts: number) => {
+      if (hasCustomRange && fromTs != null) {
+        return ts >= fromTs - effW * MS_DAY && ts < fromTs
+      }
+      const d = now() - ts
+      return d > effW * MS_DAY && d <= 2 * effW * MS_DAY
+    }
 
     // category heatmap last 90d & delta vs prior 90d
     const cats = Object.keys(reviewsPayload.aggregates.byCategory || {})
     const heatRows: HeatRow[] = cats.map((cat) => {
       const cells = perListing.map((p) => {
         const arr = reviewsByListing.get(p.listingId) || []
-        const cur = lastNDays(arr, 90)
+
+        const cur = arr //lastNDays(arr, 90)
+          .filter(r => isInCurrent(new Date(r.submittedAt).getTime()))
           .map((r) => r.categories[cat])
-          .filter((v) => typeof v === 'number')
+          .filter((v): v is number => typeof v === 'number' && isFinite(v))
+
         const prev = arr
-          .filter((r) => {
+         /* .filter((r) => {
             const d = now() - new Date(r.submittedAt).getTime()
-            return d > 90 * MS_DAY && d <= 180 * MS_DAY
-          })
+            return d > W * MS_DAY && d <= 2 * W * MS_DAY
+          })*/
+          .filter(r => isInPrior(new Date(r.submittedAt).getTime()))
           .map((r) => r.categories[cat])
           .filter((v) => typeof v === 'number')
-        const curAvg = mean(cur),
-          prevAvg = mean(prev)
+
+        const curAvg = mean(cur)
+        const prevAvg = mean(prev)
+
         return {
           listingId: p.listingId,
           listingName: p.listingName,
@@ -298,6 +403,7 @@ export default function Dashboard() {
           delta: curAvg - prevAvg,
         }
       })
+
       const peerVals = cells
         .map((c) => c.curAvg)
         .filter(Number.isFinite) as number[]
@@ -362,8 +468,17 @@ export default function Dashboard() {
       heatRows,
       globalAvg,
       ttr,
+      timelineMonthlyWindowed,
     }
-  }, [reviewsPayload, approved, presetWindowDays, hasCustomRange, hasPreset, from, to])
+  }, [
+    reviewsPayload,
+    approved,
+    presetWindowDays,
+    hasCustomRange,
+    hasPreset,
+    from,
+    to,
+  ]);
 
   const filteredReviews = useMemo(() => {
     if (!reviewsPayload?.reviews) return []
@@ -374,7 +489,7 @@ export default function Dashboard() {
     return reviewsPayload.reviews.filter((r) => {
       if (f.channel && r.channel !== f.channel) return false
       if (typeof f.minStars === 'number' && r.overall < f.minStars) return false
-      if (f.listing && r.listingName !== f.listing) return false
+      if (f.listing && r.listingId !== f.listing) return false
 
       // If a category is selected: keep reviews that include that category score.
       if (f.category && !(r.categories && f.category in r.categories))
@@ -389,6 +504,7 @@ export default function Dashboard() {
     })
   }, [reviewsPayload, reviewFilterForSummaryView])
 
+  
   return (
     <main className="grid theme-flex-light" style={{ gap: 24 }}>
       <div>
@@ -613,7 +729,25 @@ export default function Dashboard() {
               </div>
             </article>
           </div>
-          <Kpis derived={metrics} data={reviewsPayload} loading={isLoading} />
+          <section>
+            <Kpis derived={metrics} data={reviewsPayload} loading={isLoading} />
+            <aside>
+              <h3> Notes </h3>
+              {notes?.length > 0 ? (
+                <ul>
+                  {notes.map((note, index) => (
+                    <li key={index}>{note}</li>
+                  ))}
+                </ul>
+              ) : (
+                <>
+                  <p>No notes available</p>
+                  <p> Add Notes <span></span> </p>
+                </>
+              )}
+            </aside>
+          </section>
+
           <div className="card">
             <h3>Trend (Monthly Average Rating)</h3>
             {isLoading && <p className="muted">Loading…</p>}
@@ -621,10 +755,10 @@ export default function Dashboard() {
               <ChartSwitcher
                 chart={chart}
                 setChart={setChart}
-                timeline={reviewsPayload.aggregates.timelineMonthly}
+                timeline={metrics?.timelineMonthlyWindowed ?? reviewsPayload.aggregates.timelineMonthly}
                 channels={channels}
                 derived={metrics}
-                windowDays={presetWindowDays}
+                windowDays={hasCustomRange ? null : presetWindowDays}
               />
             )}
           </div>
@@ -645,6 +779,7 @@ export default function Dashboard() {
                 windowDays={presetWindowDays}
                 from={from}
                 to={to}
+                onlyChannel={channel || undefined}
               />
             )}
           </article>
@@ -759,7 +894,7 @@ export default function Dashboard() {
                 </table>
               </div>
             )}
-          </div>{' '}
+          </div>
         </>
       ) : (
         <>

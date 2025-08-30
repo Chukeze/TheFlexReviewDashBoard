@@ -3,6 +3,7 @@ import LineChart from './LineChart'
 import BarChart from './BarChart'
 import ChannelVolumeChart from './ChannelVolumeChart'
 import CategoryHeatmap from './CategoryHeatmap'
+import { useMemo } from 'react'
 
 export default function ChartSwitcher({
   chart,
@@ -19,6 +20,25 @@ export default function ChartSwitcher({
   derived: DerivedMetrics | null
   windowDays: number | null
 }) {
+
+  const filteredTimeline = useMemo(() => {
+    if (!windowDays) return timeline;
+    const monthsBack = Math.max(1, Math.ceil(windowDays / 30));
+    const cutoff = new Date();
+    cutoff.setMonth(cutoff.getMonth() - monthsBack);
+    const cutoffKey = cutoff.toISOString().slice(0,7); // YYYY-MM
+    return timeline.filter((point) => point.month >= cutoffKey);
+  }, [timeline, windowDays])
+
+  const filteredChanPoints = useMemo(() => {
+    if (!windowDays || !derived) return derived?.monthChanPoints ?? []
+    const monthsBack = Math.max(1, Math.ceil(windowDays / 30))
+    const cutoff = new Date()
+    cutoff.setMonth(cutoff.getMonth() - monthsBack)
+    const cutoffKey = cutoff.toISOString().slice(0, 7) // YYYY-MM
+    return (derived.monthChanPoints || []).filter((p) => p.month >= cutoffKey)
+  }, [derived, windowDays])
+
   const options: { value: ChartType; label: string }[] = [
     { value: 'trend', label: 'Average Rating (Monthly)' },
     { value: 'channelVolume', label: 'Review Volume by Channel' },
@@ -67,11 +87,11 @@ export default function ChartSwitcher({
         title="Click to switch chart"
         className="chart-area"
       >
-        {chart === 'trend' && <LineChart points={timeline} />}
+        {chart === 'trend' && <LineChart points={filteredTimeline} />}
         {chart === 'channelVolume' &&
           (!!derived ? (
             <ChannelVolumeChart
-              points={derived.monthChanPoints}
+              points={filteredChanPoints}
               channels={channels}
             />
           ) : (

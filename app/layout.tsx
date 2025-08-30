@@ -1,3 +1,4 @@
+import Banner from '@/components/DevBanner'
 import './globals.css'
 import Link from 'next/link'
 import { ReactNode } from 'react'
@@ -36,6 +37,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </nav>
         </header>
         <div className="container">{children}</div>
+        <footer>
+          <Banner/>
+        </footer>
       </body>
     </html>
   )

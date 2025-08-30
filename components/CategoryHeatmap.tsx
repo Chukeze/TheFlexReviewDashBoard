@@ -62,6 +62,7 @@ export default function CategoryHeatmap({
                       title={`avg ${
                         cell.curAvg?.toFixed(2) || '—'
                       } | Δ ${delta}`}
+                      style={{ textAlign: 'center' }}
                     >
                       <span
                         className={`heat ${cls}`}

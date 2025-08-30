@@ -86,7 +86,7 @@ export const ISSUE_KEYWORDS = [
   'bed', 'mattress', 'uncomfortable', 'bugs', 'cockroach', 'communication', 'rude'
 ];
 
-// Bigram-aware keyword finder (keeps your old API name for compatibility)
+// Bigram-aware keyword finder
 export function findKeyword(text?: string): string | null {
   return findIssueKeyword(text);
 }
@@ -164,7 +164,7 @@ export function toggleApproval(id: string, next: boolean, approved?: Set<string>
 }
 
 
-export   function inCurrentWindow(iso: string, hasCustomRange: boolean, hasPreset: boolean, windowDays: number | null, from?: string, to?: string): boolean {
+export function inCurrentWindow(iso: string, hasCustomRange: boolean, hasPreset: boolean, windowDays: number | null, from?: string, to?: string): boolean {
     const timeStamp = new Date(iso).getTime()
     if (hasCustomRange) {
       if (from && timeStamp < new Date(from).getTime()) return false

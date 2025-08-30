@@ -43,8 +43,10 @@ export default function LineChart({
   )
   const ys = data.map((p) => h - padB - (p.avg / 5) * innerH)
   const d = xs.map((x, i) => `${i === 0 ? 'M' : 'L'} ${x} ${ys[i]}`).join(' ')
+  const titleId = 'chart-title-avg-rating';
+  const descId = 'chart-desc-avg-rating';
 
-  return (
+  return (<>
     <div ref={hostRef} style={{ width: '100%', height: '100%' }}>
       <svg
         viewBox={`0 0 ${w} ${h}`}
@@ -56,6 +58,8 @@ export default function LineChart({
           border: '1px solid var(--border)',
           borderRadius: 12,
         }}
+        role='img'
+        aria-labelledby={`${titleId} ${descId}`}
       >
         <path d={d} fill="none" stroke="currentColor" strokeWidth="2" />
         {xs.map((x, i) => (
@@ -112,6 +116,24 @@ export default function LineChart({
           </text>
         ))}
       </svg>
-    </div>
+    </div> 
+    <table className="sr-only" aria-hidden="true">
+      <caption>Monthly average guest rating values</caption>
+      <thead>
+        <tr>
+          <th scope="col">Month</th>
+          <th scope="col">Average Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((p, i) => (
+          <tr key={i}>
+            <td>{p.month}</td>
+            <td>{p.avg.toFixed(1)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </>
   )
 }

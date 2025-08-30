@@ -45,9 +45,12 @@ export async function GET(req: NextRequest) {
   if (to) reviews = reviews.filter((r) => r.submittedAt <= to)
 
   const aggregates = buildAggregates(reviews)
-  const payload: ApiResponse = { reviews, aggregates }
+  const payload: ApiResponse = { reviews, aggregates, applied: { channel, listingId, ratingMin, ratingMax, category, from, to } }
   return new Response(JSON.stringify(payload, null, 2), {
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      'cache-control': 'no-store',
+    },
   })
 }
 

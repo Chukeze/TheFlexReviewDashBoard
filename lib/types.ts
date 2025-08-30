@@ -41,6 +41,7 @@ export type HostawayReview = {
 export type ApiResponse = {
   reviews: NormalizedReview[]
   aggregates: Aggregates
+  applied?: {}
 }
 
 export type ChartType =
@@ -92,6 +93,7 @@ export type DerivedMetrics = {
   heatRows: HeatRow[]
   globalAvg: number
   ttr: TTRSummary
+  timelineMonthlyWindowed: Array<{ month: string; avg: number; count: number }>
 }
 
 export type PerListing = {
