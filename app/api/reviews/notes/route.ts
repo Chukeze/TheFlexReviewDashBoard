@@ -1,7 +1,6 @@
 import { NextApiRequest } from "next";
 
 export async function GET(req: NextApiRequest){
-    const notes = await 
 }
 
 export async function POST(req: NextApiRequest){
