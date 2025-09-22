@@ -10,7 +10,7 @@ import {
   HeatRow,
   TTRSummary,
   Review,
-  Aggregates,
+  ReviewPayload,
 } from '@/lib/types'
 import ChartSwitcher from '@/components/ChartSwitcher'
 import OperationalFollowThroughCard from '@/components/OperationalFollowThroughCard'
@@ -28,14 +28,23 @@ import {
   MS_DAY,
   toggleApproval,
   inCurrentWindow,
+  slugify,
 } from '@/lib/utils'
 import Kpis from '@/components/Kpis'
 import IssueSummaryCard from '@/components/IssueSummaryCard'
 import NoticeBar from '@/components/NoticeBar'
 import ReviewCard from '@/components/ReviewCard'
 import SummaryModeFilters from '@/components/SummaryModeFilters'
+import { FiltersProvider } from '@/hooks/providers/FiltersProviders'
+import { ApprovedProvider } from '@/hooks/providers/ApprovedProviders'
+import DashboardGrid from '@/components/Dashboard/DashboardGrid'
+import Board from '@/components/Dashboard/Board'
+import NoteContainer from '@/components/Notes/NotesContainer/NoteContainer'
+import NotesModal from '@/components/Notes/Modal/NotesModal'
+import BoardItem from '@/components/Dashboard/BoardItem'
+import { reviewsFiltersSchema } from '@/validators/reviewsFilterSchema'
 
-type ViewMode = 'detailed' | 'summary'
+type ViewMode = 'detailed' | 'summary' | 'cleaned'
 
 type ReviewFilterForSummaryView = {
   channel?: string
@@ -45,83 +54,120 @@ type ReviewFilterForSummaryView = {
   search?: string
 }
 
-type ReviewPayload = {
-  reviews: Review[]
-  aggregates: Aggregates
-}
-
 export default function Dashboard() {
   const [viewMode, setViewMode] = useState<ViewMode>('detailed')
   const [isLoading, setIsLoading] = useState(true)
-  const [notes, setNotes] = useState([]);
   const [error, setError] = useState<string | null>(null)
-  const [reviewsPayload, setReviewsPayload] = useState<ReviewPayload | null>(null)
+  const [reviewsPayload, setReviewsPayload] = useState<ReviewPayload | null>(
+    null
+  )
 
   //Filters
   const [channel, setChannel] = useState('')
   const [listingId, setListingId] = useState('')
-  const [minRating, setMinRating] = useState(0)
-  const [maxRating, setMaxRating] = useState(5)
+  const [ratingMin, setRatingMin] = useState(0)
+  const [ratingMax, setRatingMax] = useState(5)
   const [category, setCategory] = useState('')
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
   const [presetWindowDays, setPresetWindowDays] = useState<30 | 60 | 90 | null>(
-    90
+    null
   ) // CHIP: 30/60/90
   const [approved, setApproved] = useState<Set<string>>(new Set())
   const [chart, setChart] = useState<ChartType>('trend')
   const [noticeMessage, setNoticeMessage] = useState<string>('')
-  const lastReqRef = useRef<symbol | null>(null);
+  const lastReqRef = useRef<symbol | null>(null)
 
   const [reviewFilterForSummaryView, setReviewFilterForSummaryView] =
     useState<ReviewFilterForSummaryView>({})
 
-  const [filteredReviewsForDetailedView, setFilteredReviewsForDetailedView] = useState()
+  const filters = {
+    channel,
+    listingId,
+    ratingMin,
+    ratingMax,
+    category,
+    from,
+    to,
+    presetWindowDays,
+  }
+
+  const validation = reviewsFiltersSchema.safeParse(filters)
 
   const queryString = useMemo(() => {
     const p = new URLSearchParams()
-    if (channel) p.set('channel', channel)
-    if (listingId) p.set('listingId', listingId)
-    if (minRating !== 0) p.set('ratingMin', String(minRating))
-    if (maxRating !== 5) p.set('ratingMax', String(maxRating))
-    if (category) p.set('category', category)
-    if (from) p.set('from', from)
-    if (to) p.set('to', to)
-    if (!from && !to && presetWindowDays){
+
+    if (!validation.success) {
+      //   console.log('Valid: ', { validationData: validation.data })
+      console.log('Invalid: ', { validationError: validation.error })
+      // console.log('Valid Value: ', { validationData: validation.success.valueOf() })
+      return ''
+    }
+
+    const v = validation.data
+
+    if (v?.channel) p.set('channel', v.channel)
+    if (v?.listingId) p.set('listingId', v.listingId)
+    if (typeof v?.ratingMin === 'number' && v.ratingMin !== 0)
+      p.set('ratingMin', String(v.ratingMin))
+    if (typeof v?.ratingMax === 'number' && v.ratingMax !== 5)
+      p.set('ratingMax', String(v.ratingMax))
+    if (v?.category) p.set('category', v.category)
+    if (v?.from) p.set('from', v.from)
+    if (v?.to) p.set('to', v.to)
+
+    if (!v?.from && !v?.to && v?.presetWindowDays) {
       const end = new Date().toISOString()
-      const start = new Date(Date.now() - presetWindowDays * MS_DAY).toISOString()
+      const start = new Date(
+        Date.now() - v.presetWindowDays * MS_DAY
+      ).toISOString()
       p.set('from', start)
       p.set('to', end)
     }
     return p.toString()
-  }, [channel, listingId, minRating, maxRating, category, from, to, presetWindowDays])
+  }, [
+    channel,
+    listingId,
+    ratingMin,
+    ratingMax,
+    category,
+    from,
+    to,
+    presetWindowDays,
+  ])
 
-  
   useEffect(() => {
     setIsLoading(true)
     setError(null)
+
+    if (!validation.success) {
+      setIsLoading(false)
+      setError('Invalid filters')
+      return
+    }
 
     const abrtController = new AbortController()
     const reqToken = Symbol()
     lastReqRef.current = reqToken
 
     fetch('/api/reviews/combined?' + queryString, {
-
       signal: abrtController.signal,
       cache: 'no-store',
     })
       .then((r) => r.json())
       .then((payload) => {
-        if (lastReqRef.current !== reqToken) return; //ignore out-of-order responses
+        if (lastReqRef.current !== reqToken) return //ignore out-of-order responses
         setReviewsPayload(payload)
       })
       .catch((e) => {
         if (e?.name !== 'AbortError') setError(String(e))
       })
-      .finally(() =>{ if (lastReqRef.current === reqToken) setIsLoading(false) });
+      .finally(() => {
+        if (lastReqRef.current === reqToken) setIsLoading(false)
+      })
 
-      return () => abrtController.abort()
-  }, [queryString])
+    return () => abrtController.abort()
+  }, [queryString, validation.success])
 
   useEffect(() => {
     fetch('/api/reviews/approved')
@@ -129,7 +175,6 @@ export default function Dashboard() {
       .then((j) => setApproved(new Set(j.approved || [])))
       .catch(() => {})
   }, [])
-
 
   const listings = useMemo(
     () =>
@@ -153,23 +198,38 @@ export default function Dashboard() {
   function showNotice(msg: string) {
     setNoticeMessage(msg)
     //auto-dismiss after 5s
-    window.clearTimeout((showNotice as any)._timeout)
-    ;(showNotice as any)._timeout = window.setTimeout(
-      () => setNoticeMessage(''),
-      5000
-    )
+    if (typeof window !== 'undefined') {
+      window?.clearTimeout((showNotice as any)._timeout)
+      ;(showNotice as any)._timeout = window.setTimeout(
+        () => setNoticeMessage(''),
+        5000
+      )
+    }
   }
+
+  const issuesByPath = new Map(
+    (validation.success ? [] : validation.error.issues).map((i) => [
+      i.path.join('.'),
+      i,
+    ])
+  )
+  const minRatingIssue = issuesByPath.get('ratingMin')
+  const maxRatingIssue = issuesByPath.get('ratingMax')
+  const fromIssue = issuesByPath.get('from')
+  const toIssue = issuesByPath.get('to')
+  const presetIssue = issuesByPath.get('presetWindowDays')
+
+
 
   const hasCustomRange = Boolean(from || to)
   const hasPreset = presetWindowDays !== null
-
 
   /// --------- DERIVED METRICS ---------
   const metrics: DerivedMetrics | null = useMemo(() => {
     if (!reviewsPayload?.reviews?.length) return null
 
     // map listingId -> reviews
-    const reviewsByListing = new Map<string, Review[]>()
+    const reviewsByListing = new Map<number, Review[]>()
     for (const r of reviewsPayload.reviews) {
       if (!reviewsByListing.has(r.listingId))
         reviewsByListing.set(r.listingId, [])
@@ -221,7 +281,7 @@ export default function Dashboard() {
 
         return {
           listingId: id,
-          listingName: arr[0]?.listingName || id,
+          listingName: arr[0]?.listingName,
           avg90,
           vol30,
           vol60,
@@ -272,21 +332,19 @@ export default function Dashboard() {
       )
 
     const reviewsInWindow =
-      reviewsPayload?.reviews.filter((r) => inWindow(r.submittedAt)) || [];
+      reviewsPayload?.reviews.filter((r) => inWindow(r.submittedAt)) || []
 
-    const acc: Record<string, {sum: number; n: number}> ={}
+    const acc: Record<string, { sum: number; n: number }> = {}
     for (const r of reviewsInWindow) {
-      const m = r.submittedAt.slice(0,7)
-      const a = (acc[m] ||= {sum: 0, n:0});
+      const m = r.submittedAt.slice(0, 7)
+      const a = (acc[m] ||= { sum: 0, n: 0 })
       a.sum += r.overall
       a.n += 1
     }
 
     const timelineMonthlyWindowed = Object.entries(acc)
-      .map(([month, {sum, n}]) => ({month, avg: sum / Math.max(1,n)}))
-      .sort((a,b) => a.month.localeCompare(b.month));
-
-
+      .map(([month, { sum, n }]) => ({ month, avg: sum / Math.max(1, n) }))
+      .sort((a, b) => a.month.localeCompare(b.month))
 
     const bins = [0, 1, 2, 3, 4, 5]
     const ratingDistribution = bins.map(
@@ -308,7 +366,7 @@ export default function Dashboard() {
 
     // vol per listing in current window
     const volReviewsByListing: Array<{
-      listingId: string
+      listingId: number
       name: string
       count: number
     }> = []
@@ -327,7 +385,7 @@ export default function Dashboard() {
 
       volReviewsByListing.push({
         listingId: id,
-        name: arr[0]?.listingName || id,
+        name: arr[0]?.listingName,
         count: c,
       })
     }
@@ -380,16 +438,16 @@ export default function Dashboard() {
         const arr = reviewsByListing.get(p.listingId) || []
 
         const cur = arr //lastNDays(arr, 90)
-          .filter(r => isInCurrent(new Date(r.submittedAt).getTime()))
+          .filter((r) => isInCurrent(new Date(r.submittedAt).getTime()))
           .map((r) => r.categories[cat])
           .filter((v): v is number => typeof v === 'number' && isFinite(v))
 
         const prev = arr
-         /* .filter((r) => {
+          /* .filter((r) => {
             const d = now() - new Date(r.submittedAt).getTime()
             return d > W * MS_DAY && d <= 2 * W * MS_DAY
           })*/
-          .filter(r => isInPrior(new Date(r.submittedAt).getTime()))
+          .filter((r) => isInPrior(new Date(r.submittedAt).getTime()))
           .map((r) => r.categories[cat])
           .filter((v) => typeof v === 'number')
 
@@ -415,7 +473,8 @@ export default function Dashboard() {
     // --------- TTR (Time-To-Recovery) ---------
     const pairs: TTRPair[] = []
     for (const [listingId, arr] of reviewsByListing.entries()) {
-      const listingName = arr[0]?.listingName || listingId
+      var slugComponent = listingId + arr[0]?.listingName
+      const listingName = arr[0]?.listingName || slugify(slugComponent)
       for (let i = 0; i < arr.length; i++) {
         const r = arr[i]
         const kw = findKeyword(r.text)
@@ -427,6 +486,7 @@ export default function Dashboard() {
           )
           pairs.push({
             listingId,
+            slug: slugify(slugComponent),
             listingName,
             keyword: kw,
             issueId: r.id,
@@ -478,7 +538,7 @@ export default function Dashboard() {
     hasPreset,
     from,
     to,
-  ]);
+  ])
 
   const filteredReviews = useMemo(() => {
     if (!reviewsPayload?.reviews) return []
@@ -489,7 +549,7 @@ export default function Dashboard() {
     return reviewsPayload.reviews.filter((r) => {
       if (f.channel && r.channel !== f.channel) return false
       if (typeof f.minStars === 'number' && r.overall < f.minStars) return false
-      if (f.listing && r.listingId !== f.listing) return false
+      if (f.listing && r.listingName !== f.listing) return false
 
       // If a category is selected: keep reviews that include that category score.
       if (f.category && !(r.categories && f.category in r.categories))
@@ -504,7 +564,6 @@ export default function Dashboard() {
     })
   }, [reviewsPayload, reviewFilterForSummaryView])
 
-  
   return (
     <main className="grid theme-flex-light" style={{ gap: 24 }}>
       <div>
@@ -527,8 +586,28 @@ export default function Dashboard() {
         >
           Summary
         </button>
+        <button
+          className={`button ghost small ${
+            viewMode === 'cleaned' ? 'active' : ''
+          }`}
+          onClick={() => setViewMode('cleaned')}
+          style={{ marginLeft: 8 }}
+          disabled = {true}
+        >
+          Projections
+        </button>
       </div>
-      {viewMode && viewMode === 'detailed' ? (
+      <div style={{ height: 30 }}>
+        <span style={{ height: 8 }}>
+          {(validation.error || !validation.success) && (
+            <p className="error" style={{ margin: 0 }}>
+              Invalid filter:
+              {'Invalid filter parameters, showing all reviews'}
+            </p>
+          )}
+        </span>
+      </div>
+      {viewMode && viewMode === 'detailed' && (
         <>
           <div className="card elevated">
             <h2 style={{ marginTop: 0 }}>Reviews Dashboard</h2>
@@ -594,8 +673,13 @@ export default function Dashboard() {
                   min={0}
                   max={5}
                   step={0.1}
-                  value={minRating}
-                  onChange={(e) => setMinRating(parseFloat(e.target.value))}
+                  value={ratingMin}
+                  onChange={(e) =>
+                    setRatingMin(
+                      e.target.value === '' ? 0 : parseFloat(e.target.value)
+                    )
+                  }
+                  style={{ borderColor: minRatingIssue && 'red' }}
                 />
               </div>
               <div>
@@ -606,8 +690,13 @@ export default function Dashboard() {
                   min={0}
                   max={5}
                   step={0.1}
-                  value={maxRating}
-                  onChange={(e) => setMaxRating(parseFloat(e.target.value))}
+                  value={ratingMax}
+                  onChange={(e) =>
+                    setRatingMax(
+                      e.target.value === '' ? 5 : parseFloat(e.target.value)
+                    )
+                  }
+                  style={{ borderColor: maxRatingIssue && 'red' }}
                 />
               </div>
               <div />
@@ -615,7 +704,7 @@ export default function Dashboard() {
                 <label className="label">From (ISO)</label>
                 <input
                   className="input"
-                  type="text"
+                  type="datetime-local"
                   placeholder="2023-01-01T00:00:00Z"
                   value={from}
                   readOnly={hasPreset}
@@ -629,13 +718,14 @@ export default function Dashboard() {
                     if (hasPreset) return
                     setFrom(e.target.value)
                   }}
+                  style={{ borderColor: fromIssue && 'red' }}
                 />
               </div>
               <div>
                 <label className="label">To (ISO)</label>
                 <input
                   className="input"
-                  type="text"
+                  type="datetime-local"
                   placeholder="2025-01-01T00:00:00Z"
                   value={to}
                   readOnly={hasPreset}
@@ -649,6 +739,7 @@ export default function Dashboard() {
                     if (hasPreset) return
                     setTo(e.target.value)
                   }}
+                  style={{ borderColor: toIssue && 'red' }}
                 />
               </div>
               <div className="row" style={{ alignItems: 'flex-end' }}>
@@ -675,6 +766,7 @@ export default function Dashboard() {
                             prev === d ? null : (d as 30 | 60 | 90)
                           )
                         }}
+                        style={{ borderColor: presetIssue && 'red' }}
                       >
                         Last {d} days
                       </button>
@@ -705,8 +797,8 @@ export default function Dashboard() {
                       setChannel('')
                       setListingId('')
                       setCategory('')
-                      setMinRating(0)
-                      setMaxRating(5)
+                      setRatingMin(0)
+                      setRatingMax(5)
                       setFrom('')
                       setTo('')
                     }}
@@ -733,18 +825,9 @@ export default function Dashboard() {
             <Kpis derived={metrics} data={reviewsPayload} loading={isLoading} />
             <aside>
               <h3> Notes </h3>
-              {notes?.length > 0 ? (
-                <ul>
-                  {notes.map((note, index) => (
-                    <li key={index}>{note}</li>
-                  ))}
-                </ul>
-              ) : (
-                <>
-                  <p>No notes available</p>
-                  <p> Add Notes <span></span> </p>
-                </>
-              )}
+              <NotesModal>
+                <NoteContainer />
+              </NotesModal>
             </aside>
           </section>
 
@@ -755,7 +838,10 @@ export default function Dashboard() {
               <ChartSwitcher
                 chart={chart}
                 setChart={setChart}
-                timeline={metrics?.timelineMonthlyWindowed ?? reviewsPayload.aggregates.timelineMonthly}
+                timeline={
+                  metrics?.timelineMonthlyWindowed ??
+                  reviewsPayload.aggregates.timelineMonthly
+                }
                 channels={channels}
                 derived={metrics}
                 windowDays={hasCustomRange ? null : presetWindowDays}
@@ -771,7 +857,7 @@ export default function Dashboard() {
               height: 'fit-content',
             }}
           >
-            <OperationalFollowThroughCard derived={metrics} />
+            <OperationalFollowThroughCard derived={metrics} rev={reviewsPayload?.reviews}/>
 
             {!isLoading && reviewsPayload && (
               <IssueSummaryCard
@@ -896,13 +982,14 @@ export default function Dashboard() {
             )}
           </div>
         </>
-      ) : (
+      )}
+      {viewMode && viewMode === 'summary' && (
         <>
           <h2>Reviews</h2>
           <SummaryModeFilters
             channels={channels}
-            categories={categories}
-            listings={listings.map((l) => l.id)}
+            categories={categories.map((cat) => cat)}
+            listings={listings.map((l) => l.name)}
             onChange={setReviewFilterForSummaryView}
           />
           {!filteredReviews.length ? (
@@ -926,6 +1013,20 @@ export default function Dashboard() {
             ))
           )}
         </>
+      )}
+      {viewMode === 'cleaned' && (
+        <FiltersProvider>
+          <ApprovedProvider>
+            <DashboardGrid>
+              <Board>
+                <BoardItem
+                  listing={listings.map((l) => l.name)}
+                  listingDesc={'victor'}
+                />
+              </Board>
+            </DashboardGrid>
+          </ApprovedProvider>
+        </FiltersProvider>
       )}
     </main>
   )

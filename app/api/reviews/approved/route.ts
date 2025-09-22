@@ -1,6 +1,20 @@
 import { getApprovedIds } from '@/lib/approvals';
+import { DATA_MODE } from '@/lib/env';
+import prisma from '@/lib/prisma';
+import { NextResponse } from 'next/server';
+export const runtime = 'nodejs'
 
 export async function GET() {
-  const set = await getApprovedIds();
-  return new Response(JSON.stringify({ approved: Array.from(set) }, null, 2), { headers: { 'content-type': 'application/json' } });
+  if (DATA_MODE === 'Mock') {
+    const ids = await getApprovedIds()
+    return NextResponse.json({ approved: [...ids] })
+  }
+  // In real mode, fetch from the database
+  // Assuming you have a PrismaClient instance available as `prisma`
+  const approvals = await prisma.approvedReview.findMany({
+    where: { approved: true },
+    select: { reviewId: true },
+  });
+  const ids = approvals.map(a => a.reviewId.toString());
+  return NextResponse.json({ approved: ids });
 }

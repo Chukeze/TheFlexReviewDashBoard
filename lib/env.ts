@@ -2,6 +2,7 @@
 type NodeEnv = 'development' | 'test' | 'production'
 type VercelEnv = 'development' | 'preview' | 'production'
 type NetlifyCtx = 'dev' | 'deploy-preview' | 'production'
+type DataMode = 'Live' | 'Mock' | 'CI' | 'Db' | 'File'
 
 // --- Base node env ---
 export const NODE_ENV: NodeEnv =
@@ -43,3 +44,5 @@ export const APP_ENV =
 
   // convenience for browser checks
 export const IS_BROWSER = typeof window !== 'undefined'
+
+export const DATA_MODE: DataMode = 'Db'

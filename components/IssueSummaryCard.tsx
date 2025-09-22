@@ -155,9 +155,9 @@ function extractTopIssues(
       // listings
       if (!termListing.has(term)) termListing.set(term, new Map())
       const lm = termListing.get(term)!
-      const entry = lm.get(r.listingId) || { name: r.listingName, count: 0 }
+      const entry = lm.get(String(r.listingId)) || { name: r.listingName, count: 0 }
       entry.count += 1
-      lm.set(r.listingId, entry)
+      lm.set(String(r.listingId), entry)
 
       // channel
       if (!termChannel.has(term)) termChannel.set(term, new Map())

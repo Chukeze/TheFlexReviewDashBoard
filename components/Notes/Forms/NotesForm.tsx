@@ -2,12 +2,13 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import type { Task, Color } from '@/lib/types'
-import { CheckMark } from './ColorBadge'
+import type { Notes, Color } from '@/lib/types'
+import { CheckMark } from '../ColorBadge'
 
 type Props = {
-  initial?: Partial<Task>
+  initial?: Partial<Notes>
   onSubmit: (input: { title: string; color: Color }) => Promise<void>
+  redirectOnSave?: boolean
 }
 
 const COLORS: Color[] = [
@@ -33,7 +34,7 @@ const DOT_BG: Record<Color, string> = {
   brown: 'bg-brown-500',
 }
 
-export default function NotesForm({ initial, onSubmit }: Props) {
+export default function NotesForm({ initial, onSubmit, redirectOnSave = true }: Props) {
   const router = useRouter()
   const [title, setTitle] = useState(initial?.title ?? '')
   const [color, setColor] = useState<Color>((initial?.color as Color) ?? 'blue')
@@ -52,7 +53,7 @@ export default function NotesForm({ initial, onSubmit }: Props) {
     try {
       setSaving(true)
       await onSubmit({ title: title.trim(), color })
-      router.push('/')
+      if (redirectOnSave) router.push('/')
     } catch (err: any) {
       setError(err?.message ?? 'Something went wrong')
     } finally {
@@ -62,8 +63,19 @@ export default function NotesForm({ initial, onSubmit }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="card p-6 space-y-6">
-      <div className="space-y-2">
-        <label htmlFor="title" className="text-sm text-slate-300">
+      <div
+        style={{
+          marginTop: '1.5rem',
+        }}
+      >
+        <label
+          htmlFor="title"
+          style={{
+            color: '#cbd5e1',
+            fontSize: '.875rem',
+            lineHeight: '1.25rem',
+          }}
+        >
           Title
         </label>
         <input
@@ -72,30 +84,72 @@ export default function NotesForm({ initial, onSubmit }: Props) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Ex. Brush your teeth"
-          className="w-full rounded-md border border-white/10 bg-[#101828] px-3 py-2 text-slate-200 placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-sky-500/30"
           required
           aria-describedby={error ? errorId : undefined}
           aria-invalid={!!error}
+          style={{
+            width: '100%',
+            borderRadius: '0.375rem',
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            borderColor: 'rgba(255, 255, 255, 0.1)',
+            backgroundColor: '#101828',
+            paddingLeft: '0.75rem',
+            paddingRight: '0.75rem',
+            paddingTop: '0.5rem',
+            paddingBottom: '0.5rem',
+            color: '#e2e8f0',
+            outline: 'none',
+            boxShadow: '0 0 0 2px rgba(14,165,223,0.30)',
+          }}
         />
         {error && (
-          <p id={errorId} className="text-sm text-red-400">
+          <p
+            id={errorId}
+            style={{
+              color: '#f87171',
+              fontSize: '.875rem',
+              lineHeight: '1.25rem',
+            }}
+          >
             {error}
           </p>
         )}
       </div>
 
-      <fieldset className="space-y-2">
-        <legend className="text-sm text-slate-300">Color</legend>
+      <fieldset
+        style={{
+          marginTop: '1.5rem',
+        }}
+      >
+        <legend
+          style={{
+            color: '#cbd5e1',
+            fontSize: '.875rem',
+            lineHeight: '1.25rem',
+          }}
+        >
+          Color
+        </legend>
         <div
           role="radiogroup"
           aria-label="Task color"
-          className="flex flex-wrap items-center gap-3"
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            gap: '0.75rem',
+          }}
         >
           {COLORS.map((c) => {
             const checked = c === color
             const id = `color-${c}`
             return (
-              <label key={c} htmlFor={id} className="inline-flex items-center">
+              <label
+                key={c}
+                htmlFor={id}
+                style={{ display: 'inline-flex', alignItems: 'center' }}
+              >
                 <input
                   id={id}
                   type="radio"
@@ -112,6 +166,12 @@ export default function NotesForm({ initial, onSubmit }: Props) {
                   } ring-offset-2 ring-offset-[#0b1220] peer-focus-visible:ring-2 peer-focus-visible:ring-sky-400 ${
                     checked ? 'ring-2 ring-sky-400' : ''
                   }`}
+                  style={{
+                    height: '1.75rem',
+                    width: '1.75rem',
+                    borderRadius: '9999px',
+
+                  }}
                 />
                 <span className="sr-only">{c}</span>
               </label>

@@ -5,13 +5,15 @@ import { useFollowUps } from '@/lib/followups'
 
 export default function FollowUpButton({
   term,
+  reviewId,
   listingId,
   listingName,
   onCreated, // optional callback to show a NoticeBar, etc.
   issueId,
 }: {
   term: string
-  listingId?: string
+  reviewId?: number
+  listingId?: number
   listingName?: string
   onCreated?: (msg: string) => void
   issueId?: string
@@ -36,7 +38,7 @@ export default function FollowUpButton({
     e.preventDefault()
     const fd = new FormData(e.currentTarget as HTMLFormElement)
     const notes = String(fd.get('notes') || '')
-    add({ term, listingId, listingName, notes, issueId })
+    add({ term, reviewId, listingId, listingName, notes, issueId })
     setOpen(false)
     onCreated?.(
       `Follow‑up created for “${term}”${

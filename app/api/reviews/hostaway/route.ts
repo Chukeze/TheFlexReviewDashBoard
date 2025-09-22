@@ -5,6 +5,7 @@ import { normalizeMany } from '@/lib/normalize'
 import { buildAggregates } from '@/lib/aggregates'
 import { ApiResponse, RawReview } from '@/lib/types'
 //import {fetchHostawayReviews} from '@/lib/hostawayAuth'
+export const runtime = 'nodejs'
 
 export async function GET(req: NextRequest) {
   const sp = req.nextUrl.searchParams

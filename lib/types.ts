@@ -18,7 +18,8 @@ export type NormalizedReview = {
   text: string
   submittedAt: string // ISO 8601
   guestName: string
-  listingId: string // slug
+  listingId: number // from listing tabl
+  slug: string //slug
   listingName: string
   channel: string
   type: string
@@ -56,7 +57,8 @@ export type Review = {
   overall: number
   submittedAt: string
   guestName: string
-  listingId: string
+  listingId: number
+  slug: string
   listingName: string
   channel: string
   text: string
@@ -74,7 +76,14 @@ export type Aggregates = {
     }
   >
   byChannel: Record<string, { avg: number; count: number }>
-  byCategory: Record<string, { avg: number; count: number }>
+  byCategory: Record<
+    string,
+    {
+      catergoryName: string
+      avg: number
+      count: number
+    }
+  >
   timelineMonthly: Array<{ month: string; avg: number; count: number }>
 }
 
@@ -88,16 +97,16 @@ export type DerivedMetrics = {
   coverageMin: number
   atRisk: PerListing[]
   monthChanPoints: MonthChanPoint[]
-  volReviewsByListing: Array<{ listingId: string; name: string; count: number }>
+  volReviewsByListing: Array<{ listingId: number; name: string; count: number }>
   ratingDistribution: number[]
   heatRows: HeatRow[]
   globalAvg: number
   ttr: TTRSummary
-  timelineMonthlyWindowed: Array<{ month: string; avg: number; count: number }>
+  timelineMonthlyWindowed: Array<{ month: string; avg: number; count?: number }>
 }
 
 export type PerListing = {
-  listingId: string
+  listingId: number
   listingName: string
   avg90: number
   vol30: number
@@ -118,7 +127,7 @@ export type HeatRow = {
   catMean: number
   catStd: number
   cells: Array<{
-    listingId: string
+    listingId: number
     listingName: string
     curAvg: number
     delta: number
@@ -127,7 +136,9 @@ export type HeatRow = {
 export type MonthChanPoint = { month: string; counts: Record<string, number> }
 
 export type TTRPair = {
-  listingId: string
+  reviewId: number
+  listingId: number
+  slug: string
   listingName: string
   keyword: string
   issueId: string
@@ -154,4 +165,56 @@ export type IssueRow = {
   topListingCount: number
   perChannel?: Record<string, number>
   last3?: Array<{ month: string; count: number }>
+}
+
+export type ReviewFilterForSummaryView = {
+  channel?: string
+  minStars?: number
+  category?: string
+  listing?: string
+  search?: string
+}
+
+export type ReviewPayload = {
+  reviews: Review[]
+  aggregates: Aggregates
+}
+
+export type ListingOpt = { id: string; name: string }
+
+export type DashboardProps = {
+  isLoading: boolean
+  error: string | null
+  reviewsPayload: ReviewPayload | null
+  metrics: DerivedMetrics | null
+  channels: string[]
+  categories: string[]
+  listings: ListingOpt[]
+  presetWindowDays: 30 | 60 | 90 | null
+  from: string
+  to: string
+  channel: string // '' means all (matches your original code)
+  approved: Set<string>
+  setApproved: React.Dispatch<React.SetStateAction<Set<string>>>
+  notes?: string[]
+}
+
+export type Color =
+  | 'red'
+  | 'blue'
+  | 'green'
+  | 'orange'
+  | 'indigo'
+  | 'purple'
+  | 'yellow'
+  | 'pink'
+  | 'brown'
+
+export interface Notes {
+  id: number
+  title: string
+  color: Color
+  completed: boolean
+  createdAt: string
+  updatedAt: string
 }

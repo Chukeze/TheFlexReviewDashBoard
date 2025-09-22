@@ -20,7 +20,7 @@ export default async function PropertyPage({
 
   const all = normalizeMany(raw.result);
   const reviews = all.filter(
-    (r) => r.listingId === slug && approved.has(r.id)
+    (r) => r.slug === slug && approved.has(r.id)
   );
 
   const listingName = reviews[0]?.listingName || slug;

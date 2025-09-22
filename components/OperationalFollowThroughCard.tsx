@@ -1,15 +1,17 @@
 'use client'
 
 import { useFollowUps } from '@/lib/followups'
-import { DerivedMetrics, TTRPair } from '@/lib/types'
+import { DerivedMetrics, Review, TTRPair } from '@/lib/types'
 import { daysSince, ISSUE_KEYWORDS } from '@/lib/utils'
 import Link from 'next/link'
 import FollowUpButton from './FollowUpButton'
 
 export default function OperationalFollowThroughCard({
   derived,
+  rev
 }: {
   derived: DerivedMetrics | null
+  rev: Review[]
 }) {
   const { items, toggle } = useFollowUps()
 
@@ -26,9 +28,9 @@ export default function OperationalFollowThroughCard({
 
   const open = derived.ttr.pairs.filter((p) => typeof p.days !== 'number')
 
-  const fuKey = (t: string, l: string,  issueId?: string) => `${t}::${l || ''}::${issueId || ''}`
+  const fuKey = (t: string, l:number,  issueId?: string) => `${t}::${l || ''}::${issueId || ''}`
   const statusByKey = new Map(
-    items.map((f) => [fuKey(f.term, f.listingId || '', f.issueId), f.status])
+    items.map((f) => [fuKey(f.term, f.reviewId || 0, f.issueId), f.status])
   )
 
   // slowest 5 recoveries
@@ -36,29 +38,29 @@ export default function OperationalFollowThroughCard({
 
   // top 5 open issues (most days since issue)
   const openRanked = [...open]
-    .filter((p) => statusByKey.get(fuKey(p.keyword, p.listingId, p.issueId)) !== 'closed') // only those with open follow-ups
+    .filter((p) => statusByKey.get(fuKey(p.keyword, p.reviewId, p.issueId)) !== 'closed') // only those with open follow-ups
     .sort((a, b) => daysSince(a.issueAt) - daysSince(b.issueAt))
     .slice(0, 5)
 
   const manuallyClosed = open.filter(
-    (p) => statusByKey.get(fuKey(p.keyword, p.listingId)) === 'closed'
+    (p) => statusByKey.get(fuKey(p.keyword, p.reviewId)) === 'closed'
   ).length
 
   const closedCount = closed.length + manuallyClosed
   const totalCount = open.length + closed.length
 
-  const findFU = (keyword: string, listingId: string, issueId?: string) => {
+  const findFU = (keyword: string, reviewId: number, issueId?: string) => {
     return items.find(
       (followups) =>
         followups.term === keyword &&
-        followups.listingId === listingId &&
+        followups.reviewId === reviewId &&
         followups.issueId === issueId &&
         followups.status === 'open'
     ) || items.find( (followups) => followups.issueId === issueId && followups.status === 'open' )
   }
 
   const manuallyClosedRows = open
-    .filter((p) => statusByKey.get(fuKey(p.keyword, p.listingId)) === 'closed')
+    .filter((p) => statusByKey.get(fuKey(p.keyword, p.reviewId)) === 'closed')
     .map((p) => ({
       listingId: p.listingId,
       listingName: p.listingName,
@@ -188,7 +190,7 @@ export default function OperationalFollowThroughCard({
               </thead>
               <tbody>
                 {openRanked.map((p) => {
-                  const followUp = findFU(p.keyword, p.listingId, p.issueId)
+                  const followUp = findFU(p.keyword, p.reviewId, p.issueId)
                   console.log('followUp', followUp)
                   return (
                     <tr key={p.issueId}>
@@ -222,14 +224,10 @@ export default function OperationalFollowThroughCard({
                         ) : (
                           <FollowUpButton
                             term={p.keyword}
+                            reviewId={Number.parseInt(rev.find(r => Number.parseInt(r.id) === p.reviewId)?.id ?? rev[0]?.id) || Number.parseInt(rev[0]?.id)}
                             listingId={p.listingId}
                             listingName={p.listingName}
                             issueId={p.issueId}
-                            // onCreated={()  => add({
-                            //   term: p.keyword,
-                            //   listingId: p.listingId,
-                            //   listingName: p.listingName
-                            // })}
                           />
                         )}
                       </td>

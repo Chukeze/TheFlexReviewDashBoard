@@ -33,3 +33,16 @@ export const DROP_GENERIC = new Set([
   'nice',
   'great',
 ])
+
+export const COLORS = [
+  'red',
+  'blue',
+  'green',
+  'orange',
+  'indigo',
+  'purple',
+  'yellow',
+  'pink',
+  'brown',
+] as const
+export type Color = (typeof COLORS)[number]

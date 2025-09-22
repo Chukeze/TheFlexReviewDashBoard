@@ -1,0 +1,202 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_DEV")
+}
+
+/*
+generator zod {
+  provider   = "prisma-zod-generator"
+  // optional:
+  // output  = "./src/lib/zod"   // default is ./prisma/generated
+  output = "../validators/zod"
+  pureModels = true              // lean model schemas; great for views
+}*/
+
+enum Color {
+  RED
+  BLUE
+  GREEN
+  YELLOW
+  PURPLE
+  ORANGE
+  PINK
+  BROWN
+  BLACK
+  WHITE
+}
+
+enum ReviewType {
+  guest_to_host @map("guest-to-host")
+  host_to_guest @map("host-to-guest")
+}
+
+enum ReviewStatus {
+  PUBLISHED @map("published")
+  HIDDEN @map("hidden")
+}
+
+enum Channel {
+  airbnb
+  vrbo
+  booking
+  direct
+  google
+  hostaway
+  expedia
+}
+
+model Notes {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  color     Color
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  completed Boolean  @default(false)
+}
+
+model ApprovedReview {
+  name     String
+  status    ReviewStatus @default(PUBLISHED)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  reviews Review @relation(fields: [reviewId], references: [id])
+  reviewId Int @id
+  approvalNotes String?
+  approvedBy String?
+  approvedAt DateTime?
+  approved Boolean @default(false)
+}
+
+model Review {
+  id          Int      @id @default(autoincrement())
+
+  sourceSystem String @default("hostaway")
+  sourceReviewId String 
+  channel     Channel
+
+  listingId  Int
+  Property  Listing @relation(fields: [listingId], references: [id])
+
+  rating10     Decimal? @db.Decimal(4, 1)
+  overall5     Decimal @db.Decimal(3, 2)
+  type        ReviewType
+  publicReview String
+  submittedAt DateTime
+  guestName   String
+  listingName String
+  status      ReviewStatus @default(HIDDEN)
+
+  ReviewCategoryScore ReviewCategoryScore[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  ApprovedReview ApprovedReview?
+  raw ReviewRawIngest?
+
+  FollowUps FollowUps[]
+
+  @@unique([sourceSystem, sourceReviewId, channel])
+  @@index([listingId, submittedAt])
+  @@index([channel, submittedAt])
+  @@index([status])
+
+  
+}
+
+model Listing {
+  id        Int      @id @default(autoincrement())
+  slug     String   @unique
+  name      String
+  address   String?
+  city      String?
+  state     String?
+  zip       String?
+  country   String?
+  propertyDesc String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  reviews   Review[]
+  rules     PropertyRules[]
+  policies  PropertyPolicies[]
+  amenities PropertyAmenities[]
+	@@map("Property")
+}
+
+model PropertyRules { // House Rules, Check-in/Check-out rules
+  id        Int      @id @default(autoincrement())
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  listingId Int
+  rule      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([listingId, rule])
+}
+
+model PropertyPolicies { //Cancellation, Refund, Security Deposit, etc.
+  id        Int      @id @default(autoincrement())
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  listingId Int
+  policy    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([listingId, policy])
+}
+
+model PropertyAmenities {
+  id        Int      @id @default(autoincrement())
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  listingId Int
+  amenity   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([listingId, amenity])
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  scores ReviewCategoryScore[]
+}
+
+model ReviewCategoryScore {
+  review Review @relation(fields: [reviewId], references: [id])
+  reviewId Int
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  score10    Decimal? @db.Decimal(4, 1)
+  score5     Decimal? @db.Decimal(3, 2)
+  @@id([reviewId, categoryId])
+}
+
+model ReviewRawIngest {
+  reviewId    Int     @id
+  review      Review  @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  payload     Json
+  payloadHash String  @unique      // store hex sha256
+}
+
+model FollowUps {
+  id        Int      @id @default(autoincrement())
+  review    Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  reviewId  Int
+  term     String
+  issueId  String?
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  completed Boolean  @default(false)
+  closedAt  DateTime?
+}
