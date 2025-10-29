@@ -1,14 +1,21 @@
 'use client'
-import { useState } from "react"
+import { useState } from 'react'
 import '@/styles/property.css'
-import PropertyAmenities from "./PropertyAmenities"
-import StayPolicy from "./StayPolicy"
+import PropertyAmenities from './PropertyAmenities'
+import StayPolicy from './StayPolicy'
 
-export default function PropertyDetails() {
-    const [expanded, setExpanded] = useState(false)
-    const [data, setData] = useState()
-    
-  const about =
+type ListingLike = {
+  name?: string
+  propertyDesc?: string | null
+  amenities?: string[]
+  rules?: string[]
+  policies?: string[]
+} | undefined
+
+export default function PropertyDetails({ listing }: { listing?: ListingLike}) {
+  const [expanded, setExpanded] = useState(false)
+
+  const about = (listing?.propertyDesc && String(listing.propertyDesc)) ||
     `Located in Finsbury, this spacious apartment is perfect for your stay. ` +
     `The location is great – close to public transport, local shops, and parks. ` +
     `It’s fully equipped with quality amenities to ensure a comfortable stay. ` +
@@ -32,8 +39,8 @@ export default function PropertyDetails() {
           </button>
         </p>
       </section>
-      <PropertyAmenities/>
-      <StayPolicy/>
+      <PropertyAmenities />
+      <StayPolicy />
     </>
   )
 }

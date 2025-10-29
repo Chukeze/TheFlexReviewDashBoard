@@ -136,35 +136,55 @@ model Listing {
 }
 
 model PropertyRules { // House Rules, Check-in/Check-out rules
-  id        Int      @id @default(autoincrement())
+  //id        Int      @id @default(autoincrement())
   listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
   listingId Int
-  rule      String
+  rule      Rule  @relation(fields: [ruleId], references: [id], onDelete: Cascade, map: "PropertyRules_ruleId_fkey_v2")
+  ruleId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  @@unique([listingId, rule])
+  @@unique([listingId, ruleId])
 }
 
 model PropertyPolicies { //Cancellation, Refund, Security Deposit, etc.
-  id        Int      @id @default(autoincrement())
+  //id        Int      @id @default(autoincrement())
   listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
   listingId Int
-  policy    String
+  policy    Policy @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  policyId  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  @@unique([listingId, policy])
+  @@unique([listingId, policyId])
 }
 
 model PropertyAmenities {
-  id        Int      @id @default(autoincrement())
+  //id        Int      @id @default(autoincrement())
   listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
   listingId Int
-  amenity   String
+  amenityId Int
+  amenity   Amenity @relation(fields: [amenityId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  @@unique([listingId, amenity])
+  @@id([listingId, amenityId])
 }
 
+model Amenity {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  properties PropertyAmenities[]
+}
+
+model Policy {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  properties PropertyPolicies[]
+}
+
+model Rule {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  properties PropertyRules[]
+}
 model Category {
   id    Int    @id @default(autoincrement())
   name  String @unique

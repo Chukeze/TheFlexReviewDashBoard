@@ -10,7 +10,6 @@ export async function GET() {
     return NextResponse.json({ approved: [...ids] })
   }
   // In real mode, fetch from the database
-  // Assuming you have a PrismaClient instance available as `prisma`
   const approvals = await prisma.approvedReview.findMany({
     where: { approved: true },
     select: { reviewId: true },

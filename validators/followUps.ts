@@ -29,5 +29,5 @@ export const followUpCreateSchema = z.object({
     .max(2000, 'Notes can be at most 2000 characters')
     .optional()
     .transform(sanitizeNotes),
-})
+});
 export type FollowUpCreateInput = z.infer<typeof followUpCreateSchema>

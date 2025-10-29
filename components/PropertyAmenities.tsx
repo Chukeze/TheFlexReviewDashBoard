@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import '@/styles/property.css'
 
-export default function PropertyAmenities() {
+export default function PropertyAmenities(amenities) {
   return (
     <>
       {/* Amenities */}

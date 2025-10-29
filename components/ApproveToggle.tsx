@@ -11,7 +11,7 @@ export default function ApproveToggle({ id, approved, onChanged }: { id: string;
       }}
       disabled={isPending}
       aria-pressed={approved}
-      aria-label={approved ? "Unapprove review" : "Approve review"}
+      aria-label={approved ? "Unapproved review" : "Approve review"}
     >
       {approved ? "Approved" : "Approve"}
     </button>

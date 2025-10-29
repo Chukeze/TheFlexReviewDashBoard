@@ -219,8 +219,6 @@ export default function Dashboard() {
   const toIssue = issuesByPath.get('to')
   const presetIssue = issuesByPath.get('presetWindowDays')
 
-
-
   const hasCustomRange = Boolean(from || to)
   const hasPreset = presetWindowDays !== null
 
@@ -485,6 +483,7 @@ export default function Dashboard() {
               rr.overall >= 4.5
           )
           pairs.push({
+            reviewId: Number(r.id),
             listingId,
             slug: slugify(slugComponent),
             listingName,
@@ -592,7 +591,7 @@ export default function Dashboard() {
           }`}
           onClick={() => setViewMode('cleaned')}
           style={{ marginLeft: 8 }}
-          disabled = {true}
+          disabled={true}
         >
           Projections
         </button>
@@ -857,7 +856,10 @@ export default function Dashboard() {
               height: 'fit-content',
             }}
           >
-            <OperationalFollowThroughCard derived={metrics} rev={reviewsPayload?.reviews}/>
+            <OperationalFollowThroughCard
+              derived={metrics}
+              rev={reviewsPayload?.reviews ?? []}
+            />
 
             {!isLoading && reviewsPayload && (
               <IssueSummaryCard
@@ -961,17 +963,43 @@ export default function Dashboard() {
                           <label className="row small" style={{ gap: 8 }}>
                             <input
                               type="checkbox"
-                              checked={approved.has(r.id)}
+                              checked={r.status?.toString().toLowerCase?.() ===
+                              'published'}
                               onChange={(e) =>
                                 toggleApproval(
                                   r.id,
                                   e.target.checked,
                                   approved,
-                                  setApproved
+                                  setApproved,
+                                  (serverStatus) => {
+                                    // ensure local state matches server (in case of any divergence)
+                                    setReviewsPayload((prev) => {
+                                      if (!prev) return prev
+                                      return {
+                                        ...prev,
+                                        reviews: prev.reviews.map((x) =>
+                                          x.id === r.id
+                                            ? { ...x, status: serverStatus }
+                                            : x
+                                        ),
+                                      }
+                                    })
+                                  }
                                 )
                               }
                             />
-                            {approved.has(r.id) ? 'Approved' : 'Hidden'}
+                            {(r.status?.toString().toLowerCase?.() === 'published'
+                              ? 'Approved'
+                              : 'Hidden') 
+                              //||
+                              //(approved.has(r.id) ? 'Approved' : 'Hidden')
+                              }
+                            <span className="sr-only">
+                              {r.status?.toString().toLowerCase?.() ===
+                              'published'
+                                ? 'Approved (published to site)'
+                                : 'Hidden (not published)'}
+                            </span>
                           </label>
                         </td>
                       </tr>

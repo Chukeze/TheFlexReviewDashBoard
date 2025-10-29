@@ -68,6 +68,14 @@ export default function OperationalFollowThroughCard({
       issueAt: p.issueAt,
     }))
 
+  console.log('manuallyClosedRows ', manuallyClosedRows)
+  console.log('Manually closed count ', manuallyClosed)
+
+  console.log('derived.ttr.pairs', derived.ttr.pairs)
+  console.log('openRanked', openRanked)
+  console.log('status', statusByKey);
+
+  console.log('closedCount', closedCount, 'totalCount', totalCount)
   return (
     <div className="card" id="OpsFollowThrough">
       <h3 style={{ marginTop: 0 }}>
@@ -142,7 +150,7 @@ export default function OperationalFollowThroughCard({
               </table>
             )}
           </div>
-          {manuallyClosedRows.length > 0 && 
+          {(manuallyClosedRows.length > 0 || closedCount > 0) && 
             <div className="card">
               <h4 style={{ margin: '4px 0' }}>Manually Resolved</h4>            
                 <table className="table">

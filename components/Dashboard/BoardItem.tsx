@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import VacancyRateCharts from '../Financials/VacancyRateCharts'
 
-export default function BoardItem({ listing, listingDesc }:{ listing: string, listingDesc: string }) {
+export default function BoardItem({ listing, listingDesc }:{ listing: string[], listingDesc: string }) {
   const [review, setReview] = useState<string>()
   //when they use the filter it, filter and then bring up the listing info alongside the reviews for that listing
   const filters = useFilters()

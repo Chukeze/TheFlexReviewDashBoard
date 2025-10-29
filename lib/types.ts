@@ -63,6 +63,7 @@ export type Review = {
   channel: string
   text: string
   categories: Record<string, number>
+  status?: boolean | string
 }
 
 export type Aggregates = {
@@ -217,4 +218,25 @@ export interface Notes {
   completed: boolean
   createdAt: string
   updatedAt: string
+}
+
+
+export type PropertyResponse = {
+  listing: {
+    id: number
+    name: string
+    slug: string
+    images?: string[]
+    address?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    zip?: string | null
+    propertyDesc?: string | null
+    amenities: string[]
+    policies: string[]
+    rules: string[]
+  }
+  reviews: NormalizedReview[]
+  aggregates: Aggregates
 }

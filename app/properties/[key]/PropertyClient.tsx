@@ -1,29 +1,54 @@
-import { promises as fs } from 'fs'
-import path from 'path'
-import { normalizeMany } from '@/lib/normalize'
-import { getApprovedIds } from '@/lib/approvals'
-import { RawReview } from '@/lib/types'
-import PropertyDetails from '@/components/PropertyDetails'
-import './gallery.css'
-import { initGallery } from '@/lib/compute'
+'use client'
+
 import InitGalleryButton from '@/components/InitGalleryButton'
+import PropertyDetails from '@/components/PropertyDetails'
+import { useFetch } from '@/hooks/useFetch'
+import { initGallery } from '@/lib/compute'
+import { PropertyResponse } from '@/lib/types'
+import { useMemo } from 'react'
+import './gallery.css'
+import { Stars } from '@/components/ReviewCard'
 
-export default async function PropertyPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default function PropertyClient({ slug }: { slug: string }) {
+  const options = useMemo(
+    () => ({
+      method: 'GET',
+      cache: 'no-store' as const,
+    }),
+    []
+  )
 
-  const raw = await getHostawayReviews();
-  const approved = await getApprovedIds();
+  const { data, isLoading, isError } = useFetch<PropertyResponse>(
+    `/api/property/${encodeURIComponent(slug)}`,
+    options
+  )
 
-  const all = normalizeMany(raw.result);
-  const reviews = all.filter(
-    (r) => r.slug === slug && approved.has(r.id)
-  );
+  if (isError) {
+    return (
+      <main className="theme-flex">
+        <div className="card">
+          <h3>Property not found</h3>
+          <p className="muted">We couldn’t load this listing.</p>
+        </div>
+      </main>
+    )
+  }
 
-  const listingName = reviews[0]?.listingName || slug;
+  if (isLoading || !data) {
+    return (
+      <main className="theme-flex">
+        <div className="card">
+          <p className="muted">Loading…</p>
+        </div>
+      </main>
+    )
+  }
+
+  const { listing, reviews } = data
+  const listingName = listing?.name || slug
+  const reviewsRatings = reviews.map((r) => r.overall).filter((s): s is number => s !== null)
+  const averageRating =
+    reviewsRatings.reduce((sum, r) => sum + r, 0) / (reviewsRatings.length || 1)
   return (
     <main className="theme-flex">
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -225,7 +250,7 @@ export default async function PropertyPage({
                 <div className="gallery-grid__overlay" aria-hidden="true"></div>
               </figure>
 
-              <InitGalleryButton viewAll={initGallery}/>
+              <InitGalleryButton viewAll={initGallery} />
             </div>
           </div>
         </div>
@@ -243,9 +268,26 @@ export default async function PropertyPage({
         style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr', gap: 24 }}
       >
         <main className="grid" style={{ gap: 24 }}>
-          <PropertyDetails />
+          <PropertyDetails listing={listing} />
           <div className="card">
-            <h3 className="header">Guest Reviews</h3>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <h3 className="header" style={{display:'inline-flex', flexDirection: 'row'}}>
+                Guest Reviews{' '}
+                <span>
+                  <Stars value={averageRating} />
+                </span>
+              </h3>
+              <span>
+                <strong>{reviews.length}</strong>
+              </span>
+            </div>
             {!reviews.length && (
               <p className="muted">No approved reviews yet.</p>
             )}
@@ -262,6 +304,9 @@ export default async function PropertyPage({
                 </div>
                 <div style={{ fontWeight: 600, marginTop: 4 }}>
                   {r.overall.toFixed(2)} / 5
+                  <span>
+                    <Stars value={Number(r.overall.toPrecision(4))} />
+                  </span>
                 </div>
                 <p style={{ marginTop: 4 }}>{r.text}</p>
                 <div className="small muted">— {r.guestName}</div>
@@ -386,17 +431,4 @@ export default async function PropertyPage({
       </div>
     </main>
   )
-}
-
-
-async function getHostawayReviews() {
-  const file = path.join(
-    process.cwd(),
-    'data',
-    'mock-hostaway-reviews.json'
-  )
-  return JSON.parse(await fs.readFile(file, 'utf-8')) as {
-    status: string
-    result: RawReview[]
-  } 
 }

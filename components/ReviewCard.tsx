@@ -1,15 +1,23 @@
 import ApproveToggle from './ApproveToggle';
 
 export function Stars({ value }: { value: number | null }) {
-  const v = value ?? 0;
+  const raw = value ?? 0
+  const v = Math.max(0, Math.min(5, raw)) // clamp 0..5
+  const rounded = Math.round(v * 2) / 2 // nearest 0.5
+
+  const full = Math.floor(rounded) // ★ count
+  const half = rounded % 1 === 0.5 ? 1 : 0 // ✬ count (0 or 1)
+  const empty = 5 - full - half // ☆ count
+
   return (
     <div
       style={{ marginTop: '1rem', color: 'var(--full-star)' }}
       className="text-sm text-amber-400"
       aria-label={`${v} out of 5 stars`}
     >
-      {'★'.repeat(Math.round(v))}
-      {'☆'.repeat(5 - Math.round(v))}{' '}
+      {'★'.repeat(full)}
+      <span style={{color: '#f5ed00'}}>{half ? '✬' : ''}</span>
+      {'☆'.repeat(empty)}
       <span className="text-slate-400">({v})</span>
     </div>
   )

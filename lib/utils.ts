@@ -1,5 +1,5 @@
 import { normalizeWord, normalizePhrase } from './normalize'
-import { Review } from './types'
+import { NormalizedReview, Review } from './types'
 
 export function slugify(input: string): string {
   return input
@@ -286,12 +286,14 @@ export function findIssueKeyword(text?: string): string | null {
   return hit || null
 }
 
-export function toggleApproval(
+export async function toggleApproval(
   id: string,
   next: boolean,
   approved?: Set<string>,
-  setApproved?: (s: Set<string>) => void
+  setApproved?: (s: Set<string>) => void,
+  onStatusChanged?: (newStatus: 'published' | 'hidden') => void
 ) {
+  /*
   fetch('/api/reviews/approve', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -304,6 +306,32 @@ export function toggleApproval(
       if (setApproved) setApproved(copy)
     })
     .catch(() => {})
+    */
+
+  try{
+    const res = await fetch('/api/reviews/approve', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ reviewId: Number(id), approved: next }),
+    })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const json: { status?: 'PUBLISHED' | 'HIDDEN' } = await res.json()
+
+    // Back-compat: keep the Set in sync if you’re still using it elsewhere
+    if (approved && setApproved) {
+      const copy = new Set(approved)
+      next ? copy.add(String(id)) : copy.delete(String(id))
+      setApproved(copy)
+    }
+
+    // Drive UI from review.status
+    if (json.status && onStatusChanged) {
+      onStatusChanged(json.status === 'PUBLISHED' ? 'published' : 'hidden')
+    }
+  }
+  catch (error) {
+    console.error('Failed to toggle approval:', error)
+  }
 }
 
 export function inCurrentWindow(
@@ -372,4 +400,44 @@ export function matchesDetailedFilters(
     return false
   }
   return true
+}
+
+
+export function toNormalized(
+  r: any,
+  listing: { id: number; slug: string; name: string }
+): NormalizedReview {
+  // Flatten category scores: prefer score5; else halve score10
+  const categories: Record<string, number> = {}
+  for (const c of r.ReviewCategoryScore ?? []) {
+    const score5 =
+      c.score5 != null
+        ? Number(c.score5)
+        : c.score10 != null
+        ? Number(c.score10) / 2
+        : null
+    if (score5 != null && c.category?.name) {
+      categories[c.category.name] = score5
+    }
+  }
+
+  return {
+    id: String(r.id),
+    overall: Number(r.overall5 ?? 0),
+    text: r.publicReview ?? '',
+    submittedAt:
+      r.submittedAt instanceof Date
+        ? r.submittedAt.toISOString()
+        : new Date(r.submittedAt).toISOString(),
+    guestName: r.guestName ?? 'Guest',
+    // Use the listing slug so downstream URLs / links remain stable
+    listingId: listing.id,
+    listingName: listing.name,
+    channel: String(r.channel),
+    type: String(r.type),
+    // Normalize enum → lowercase text to match the rest of your app
+    status: String(r.status).toLowerCase(),
+    categories,
+    slug: listing.slug,
+  }
 }
