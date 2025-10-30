@@ -66,7 +66,7 @@ export async function GET(req: Request) {
       text: (g.text?.text || '').trim(),
       submittedAt: g.publishTime || new Date().toISOString(),
       guestName: g.authorAttribution?.displayName || 'Guest',
-      listingId: placeId,
+      listingId: Number(placeId),
       listingName: placeName,
       channel: 'google',
       type: 'guest-to-host',
@@ -116,7 +116,7 @@ export async function GET(req: Request) {
 
     const match = (r: Review) => {
       if (channel && r.channel !== channel) return false
-      if (listingId && r.listingId !== listingId) return false
+      if (listingId && r.listingId !== Number(listingId)) return false
       if (category && !(r.categories && category in r.categories)) return false
       if (
         r.overall < clamp(ratingMin, 0, 5) ||
