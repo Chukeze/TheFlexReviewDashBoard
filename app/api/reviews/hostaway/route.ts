@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
     reviews = reviews.filter(
       (r) => r.channel.toLowerCase() === channel.toLowerCase()
     )
-  if (listingId) reviews = reviews.filter((r) => r.listingId === listingId)
+  if (listingId) reviews = reviews.filter((r) => r.listingId === Number(listingId))
   if (ratingMin !== undefined)
     reviews = reviews.filter((r) => r.overall >= ratingMin)
   if (ratingMax !== undefined)
