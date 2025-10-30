@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react'
 import TranslationsProvider from '@/components/TranslationsProvider'
-//import enCommon from '@/locales/en/common.json'
-//import enDashboard from '@/locales/en/dashboard.json'
-//import esCommon from '@/locale/es/common.json'
-//import esDashboard from '@/locales/es/dashboard.json'
+import enCommon from '@/locales/en/common.json'
+import enDashboard from '@/locales/en/dashboard.json'
+import esCommon from '@/locales/es/common.json'
+import esDashboard from '@/locales/es/dashboard.json'
 
 const RESOURCES = {
-  //en: { common: enCommon, dashboard: enDashboard },
- // es: { common: esCommon, dashboard: esDashboard },
+  en: { common: enCommon, dashboard: enDashboard },
+  es: { common: esCommon, dashboard: esDashboard },
 }
 
 export default function RootLayout({
