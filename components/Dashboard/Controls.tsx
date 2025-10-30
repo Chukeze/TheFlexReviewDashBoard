@@ -50,7 +50,7 @@ export default function Controls({
 }) {
   const filters = useFilters()
   const dispatch = useFiltersDispatch()
-    const [noticeMessage, setNoticeMessage] = useState<string>('')
+  const [noticeMessage, setNoticeMessage] = useState<string>('')
 
   // Options from DB (payload.aggregates is coming from your API)
   const channelOptions: Option[] = useMemo(() => {
@@ -149,6 +149,18 @@ export default function Controls({
   }
 
   const hasPreset = payload.aggregates.presetWindowDays != null
+
+  function showNotice(msg: string) {
+    setNoticeMessage(msg)
+    //auto-dismiss after 5s
+    if (typeof window !== 'undefined') {
+      window?.clearTimeout((showNotice as any)._timeout)
+      ;(showNotice as any)._timeout = window.setTimeout(
+        () => setNoticeMessage(''),
+        5000
+      )
+    }
+  }
   return (
     <div
       className="card"
