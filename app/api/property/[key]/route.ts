@@ -3,18 +3,23 @@ import prisma from '@/lib/prisma'
 import { toNormalized } from '@/lib/utils'
 import { buildAggregates } from '@/lib/aggregates'
 
+
+
+type Params = { key: string }
+type Ctx = { params: Promise<Params> }
+
 //get a property either by id or slug and then query the listing table to get the listing
 //if the table doesn't include the reviews for the property it then queries the reviews table
 //to get reviews for the property then it will filter the reviews for that property based on
 //if that review has been approved or not
-
 export async function GET(
   req: NextRequest,
-  { params }: { params: { key: string } }
+  { params }: Ctx 
 ) {
   console.log('PROPERTY ROUTE REQ:', req)
   console.log('PROPERTY ROUTE PARAMS:', params)
-  const raw = await params?.key?.trim()
+  const { key } = await params
+  const raw = key?.trim()
   console.log('PROPERTY ROUTE KEY:', raw)
   if (!raw) {
     return NextResponse.json({ error: 'No slug provided' }, { status: 400 })
