@@ -14,7 +14,7 @@ export async function GET(
 ) {
   console.log('PROPERTY ROUTE REQ:', req)
   console.log('PROPERTY ROUTE PARAMS:', params)
-  const raw = params?.key?.trim()
+  const raw = await params?.key?.trim()
   console.log('PROPERTY ROUTE KEY:', raw)
   if (!raw) {
     return NextResponse.json({ error: 'No slug provided' }, { status: 400 })
