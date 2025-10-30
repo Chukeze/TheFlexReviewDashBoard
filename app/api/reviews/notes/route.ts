@@ -1,20 +1,18 @@
-import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
-export async function GET(req: NextApiRequest){
+export async function GET(req: NextRequest){
 }
 
-export async function POST(req: NextApiRequest){
-
-}
-
-export async function DELETE(req: NextApiRequest){
+export async function POST(req: NextRequest){
 
 }
 
-export async function PATCH(req: NextApiRequest){
+export async function DELETE(req: NextRequest){
+}
+
+export async function PATCH(req: NextRequest){
 
 }
 
-export async function PUT(req: NextApiRequest){
-
+export async function PUT(req: NextRequest){
 }
