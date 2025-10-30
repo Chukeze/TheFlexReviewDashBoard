@@ -36,7 +36,7 @@ export default async function RootLayout({
   params: { locale },
 }: {
   children: ReactNode
-  params: { locale: Promise<any>}
+  params: Promise<any> & { locale: AppLocale }
 }) {
   /*const [common, dashboard] = await Promise.all([
     import(`@/locales/${locale}/common.json`).then((m) => m.default),
