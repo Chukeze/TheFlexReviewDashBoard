@@ -9,7 +9,7 @@ export default function CategoryHeatmap({
     catMean: number
     catStd: number
     cells: Array<{
-      listingId: string
+      listingId: number
       listingName: string
       curAvg: number
       delta: number
