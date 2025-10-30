@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server'
-import { PrismaClient } from '@/generated/prisma'
+//import { PrismaClient } from '@/generated/prisma'
 //import { PrismaClient } from '@/prisma/client'
+import prisma from '@/lib/prisma';
 import { followUpCreateSchema } from '@/validators/followUps'
 
-const prisma = new PrismaClient()
+//const prisma = new PrismaClient()
 export const dynamic = 'force-dynamic'
 
 export async function POST(req: Request) {

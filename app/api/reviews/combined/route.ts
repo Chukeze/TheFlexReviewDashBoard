@@ -11,12 +11,13 @@ import type {
 import { promises as fs } from 'fs'
 import path from 'path'
 //import { PrismaClient } from '@prisma/client'
-import { PrismaClient } from '@/generated/prisma'
+//import { PrismaClient } from '@/generated/prisma'
+import prisma from '@/lib/prisma';
 
 import { buildAggregates } from '@/lib/aggregates'
 import { DATA_MODE } from '@/lib/env'
 
-const prisma = new PrismaClient()
+//const prisma = new PrismaClient()
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: Request) {
