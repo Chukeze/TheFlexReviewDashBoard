@@ -10,7 +10,7 @@ const RESOURCES = {
  // es: { common: esCommon, dashboard: esDashboard },
 }
 
-export function RootLayout({
+export default function RootLayout({
   children,
   params: { locale },
 }: {
