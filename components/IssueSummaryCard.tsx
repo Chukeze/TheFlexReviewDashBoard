@@ -190,7 +190,7 @@ function extractTopIssues(
       term,
       count,
       listingsImpacted: lm.size,
-      topListingId: top?.[0] || '',
+      topListingId: Number(top?.[0]) || 0,
       topListingName: top?.[1]?.name || '',
       topListingCount: top?.[1]?.count || 0,
       perChannel: Object.fromEntries(termChannel.get(term) || []),

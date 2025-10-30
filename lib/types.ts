@@ -161,7 +161,7 @@ export type IssueRow = {
   term: string
   count: number // total mentions
   listingsImpacted: number // unique listings
-  topListingId: string
+  topListingId: number
   topListingName: string
   topListingCount: number
   perChannel?: Record<string, number>

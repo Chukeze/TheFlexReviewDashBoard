@@ -1,0 +1,9 @@
+{
+  "title": "Reviews Dashboard",
+  "subtitle": "Filter, spot trends, and approve reviews.",
+  "filters": {
+    "channel": "Channel",
+    "listing": "Listing",
+    "category": "Category"
+  }
+}

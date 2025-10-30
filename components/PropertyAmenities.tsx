@@ -1,16 +1,18 @@
 'use client'
 import { useState } from 'react'
 import '@/styles/property.css'
+import { useTranslation } from 'react-i18next'
 
 export default function PropertyAmenities(amenities) {
+  const { t } = useTranslation('common')
   return (
     <>
       {/* Amenities */}
       <section className="fx-card">
         <header className="fx-row fx-space">
-          <h2 className="fx-h2">Amenities</h2>
+          <h2 className="fx-h2">{t('amenities')}</h2>
           <button type="button" className="fx-btn fx-btn-outline">
-            <span>View all amenities</span>
+            <span>{t('viewAllAmenities')}</span>
             <svg
               className="fx-icon"
               xmlns="http://www.w3.org/2000/svg"
@@ -44,10 +46,11 @@ export default function PropertyAmenities(amenities) {
 
 /* Small amenity item */
 function Amenity({ icon, label }: { icon: string; label: string }) {
+  const { t } = useTranslation('common')
   return (
     <div className="fx-amenity">
       <span className="fx-amenity-icon">{renderIcon(icon)}</span>
-      <span className="fx-amenity-text">{label}</span>
+      <span className="fx-amenity-text">{t(label)}</span>
     </div>
   )
 }

@@ -61,6 +61,7 @@ export async function GET(req: Request) {
     // Map Google’s review shape -> your NormalizedReview
     return reviews.map((g, i) => ({
       id: `${placeId}-${g.publishTime || i}`,
+      slug: `${listingId} + ${placeId}-${g.publishTime || i}`,
       overall: Number(g.rating) || 0, // Google is already 1–5
       text: (g.text?.text || '').trim(),
       submittedAt: g.publishTime || new Date().toISOString(),

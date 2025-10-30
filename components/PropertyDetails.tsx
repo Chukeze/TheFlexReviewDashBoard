@@ -3,6 +3,7 @@ import { useState } from 'react'
 import '@/styles/property.css'
 import PropertyAmenities from './PropertyAmenities'
 import StayPolicy from './StayPolicy'
+import { useTranslation } from 'react-i18next'
 
 type ListingLike = {
   name?: string
@@ -13,6 +14,9 @@ type ListingLike = {
 } | undefined
 
 export default function PropertyDetails({ listing }: { listing?: ListingLike}) {
+
+  const { t } = useTranslation('common')
+
   const [expanded, setExpanded] = useState(false)
 
   const about = (listing?.propertyDesc && String(listing.propertyDesc)) ||
@@ -25,9 +29,9 @@ export default function PropertyDetails({ listing }: { listing?: ListingLike}) {
     <>
       {/* About */}
       <section className="fx-card">
-        <h2 className="fx-h2">About this property</h2>
+        <h2 className="fx-h2">{t('About This Property')}</h2>
         <p className="fx-body">
-          <span className={expanded ? '' : 'fx-clamp'}>{about}</span>
+          <span className={expanded ? '' : 'fx-clamp'}>{t(`${about}`)}</span>
           <button
             type="button"
             className="fx-link"
@@ -35,7 +39,7 @@ export default function PropertyDetails({ listing }: { listing?: ListingLike}) {
             aria-expanded={expanded}
             aria-controls="about-more"
           >
-            {expanded ? 'Show less' : 'Read more'}
+            {expanded ? t('ShowLess') : t('readMore')}
           </button>
         </p>
       </section>

@@ -1,0 +1,12 @@
+{
+  "siteName": "FlexLiving Dashboard",
+  "nav": {
+    "home": "Home",
+    "properties": "Properties",
+    "reviews": "Reviews"
+  },
+  "cta": {
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}
