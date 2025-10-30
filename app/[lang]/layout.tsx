@@ -33,10 +33,7 @@ const RESOURCES = {
 
 export default async function RootLayout({
   children,
-  params: { locale },
-}: {
-  children: ReactNode
-  params: { locale: 'en' | 'es' }
+  params: { locale }
 }) {
   /*const [common, dashboard] = await Promise.all([
     import(`@/locales/${locale}/common.json`).then((m) => m.default),
