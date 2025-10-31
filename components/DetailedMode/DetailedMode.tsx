@@ -1,4 +1,4 @@
-import { ChartType } from "@/lib/types"
+import { ChartType, DerivedMetrics, ReviewPayload } from "@/lib/types"
 import { zClass, toggleApproval } from "@/lib/utils"
 import Link from "next/link"
 import { useState } from "react"
@@ -10,7 +10,17 @@ import NoteContainer from "../Notes/NotesContainer/NoteContainer"
 import NoticeBar from "../NoticeBar"
 import OperationalFollowThroughCard from "../OperationalFollowThroughCard"
 
-export default function DetailedMode({channels, listings, categories, isLoading, reviewsPayload, metrics, error}) {
+type DetailedModeProps = {
+  channels: string[]
+  listings: string[]
+  categories: string[]
+  isLoading: boolean
+  reviewsPayload: ReviewPayload | null
+  metrics: DerivedMetrics | null 
+  error?: string | null
+}
+
+export default function DetailedMode({channels, listings, categories, isLoading, reviewsPayload, metrics, error}: DetailedModeProps) {
       const [channel, setChannel] = useState('')
       const [listingId, setListingId] = useState('')
       const [minRating, setMinRating] = useState(0)
@@ -72,8 +82,8 @@ export default function DetailedMode({channels, listings, categories, isLoading,
             >
               <option value="">All</option>
               {listings.map((l) => (
-                <option key={l.id} value={l.id}>
-                  {l.name}
+                <option key={l} value={l}>
+                  {l}
                 </option>
               ))}
             </select>
@@ -271,7 +281,7 @@ export default function DetailedMode({channels, listings, categories, isLoading,
           height: 'fit-content',
         }}
       >
-        <OperationalFollowThroughCard derived={metrics} />
+        <OperationalFollowThroughCard derived={metrics} rev={reviewsPayload?.reviews ?? []} />
 
         {!isLoading && reviewsPayload && (
           <IssueSummaryCard
