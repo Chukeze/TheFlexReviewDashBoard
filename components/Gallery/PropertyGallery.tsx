@@ -3,7 +3,7 @@ import Gallery, { GalleryImage } from '@/components/Gallery/Gallery'
 
 const images: GalleryImage[] = [
   {
-    src: imageSource,
+    src: '',
     alt: 'Bedroom',
     width: 1600,
     height: 1066,
