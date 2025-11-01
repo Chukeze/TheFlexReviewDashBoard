@@ -1,16 +1,16 @@
 'use client'
 import  { useMemo } from 'react'
-import { Review, Aggregates, Derived } from '@/lib/types'
+import { Review, Aggregates, DerivedMetrics } from '@/lib/types'
 
 type Props = {
-  derived: Derived | (Derived & { perListing?: Derived['perListing'] }) | null
+  derived: DerivedMetrics | (DerivedMetrics & { perListing?: DerivedMetrics['perListing'] }) | null
   data: { reviews: Review[]; aggregates: Aggregates } | null | undefined
   loading: boolean
 }
 /** Normalize shape to introduce flexibility for `perListing` */
-export  async function usePer(derived: Props['derived']): Derived['per'] {
+export  async function usePer(derived: Props['derived']): Promise<DerivedMetrics['perListing']> {
     return useMemo(() => {
-      if (!derived) return [] as unknown as Derived['per'];
+      if (!derived) return [] as unknown as DerivedMetrics['perListing'];
       // Backward compatibility: allow either `per` or `perListing`
       const candidate: any = derived as any;
       return Array.isArray(candidate.perListing) ? candidate.perListing : candidate.per;

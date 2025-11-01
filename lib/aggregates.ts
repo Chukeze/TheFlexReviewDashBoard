@@ -41,7 +41,7 @@ export function buildAggregates(items: NormalizedReview[]): Aggregates {
 
   const byCategory: Aggregates['byCategory'] = {};
   for (const [cat, s] of Object.entries(catSum)) {
-    byCategory[cat] = { avg: Number((s.sum / Math.max(1, s.count)).toFixed(2)), count: s.count };
+    byCategory[cat] = {catergoryName: cat, avg: Number((s.sum / Math.max(1, s.count)).toFixed(2)), count: s.count };
   }
 
   const timelineMonthly = Object.entries(monthMap)
