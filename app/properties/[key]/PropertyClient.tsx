@@ -46,7 +46,9 @@ export default function PropertyClient({ slug }: { slug: string }) {
 
   const { listing, reviews } = data
   const listingName = listing?.name || slug
-  const reviewsRatings = reviews.map((r) => r.overall).filter((s): s is number => s !== null)
+  const reviewsRatings = reviews
+    .map((r) => r.overall)
+    .filter((s): s is number => s !== null)
   const averageRating =
     reviewsRatings.reduce((sum, r) => sum + r, 0) / (reviewsRatings.length || 1)
   return (
@@ -204,7 +206,7 @@ export default function PropertyClient({ slug }: { slug: string }) {
               aria-live="polite"
               data-gallery-counter
             >
-              1 / 8
+              3 / 8
             </div>
           </div>
 
@@ -278,12 +280,17 @@ export default function PropertyClient({ slug }: { slug: string }) {
                 alignItems: 'center',
               }}
             >
-              <h3 className="header" style={{display:'inline-flex', flexDirection: 'row'}}>
-                Guest Reviews{' '}
-                <span>
-                  <Stars value={averageRating} />
-                </span>
-              </h3>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'stretch',
+                }}
+              >
+                <h3 className="header">Guest Reviews</h3>
+                <Stars value={Number(averageRating.toFixed(2))} />
+              </div>
               <span>
                 <strong>{reviews.length}</strong>
               </span>

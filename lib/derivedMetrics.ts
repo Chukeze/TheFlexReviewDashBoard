@@ -36,7 +36,7 @@ export function deriveMetrics(
   window: TimeWindow
 ): DerivedMetrics {
   // map listingId -> reviews (chronological)
-  const reviewsByListing = new Map<string, Review[]>()
+  const reviewsByListing = new Map<number, Review[]>()
   for (const r of reviews) {
     if (!reviewsByListing.has(r.listingId))
       reviewsByListing.set(r.listingId, [])
@@ -80,7 +80,7 @@ export function deriveMetrics(
       ).length
       return {
         listingId: id,
-        listingName: arr[0]?.listingName || id,
+        listingName: arr[0]?.listingName,
         avg90,
         vol30: arr30.length,
         vol60: arr60.length,
@@ -156,7 +156,7 @@ export function deriveMetrics(
   const volReviewsByListing = Array.from(reviewsByListing.entries())
     .map(([id, arr]) => {
       const count = arr.filter((r) => inWin(r.submittedAt)).length
-      return { listingId: id, name: arr[0]?.listingName || id, count }
+      return { listingId: id, name: arr[0]?.listingName || String(id), count }
     })
     .sort((a, b) => b.count - a.count)
 
@@ -223,7 +223,7 @@ export function deriveMetrics(
   // (f) TTR pairs
   const pairs: TTRPair[] = []
   for (const [listingId, arr] of reviewsByListing.entries()) {
-    const listingName = arr[0]?.listingName || listingId
+    const listingName = arr[0]?.listingName || listingId.toString()
     for (let i = 0; i < arr.length; i++) {
       const r = arr[i]
       const kw = findKeyword(r.text)
@@ -234,7 +234,9 @@ export function deriveMetrics(
             rr.overall >= 4.5
         )
         pairs.push({
+          reviewId: Number(r.id),
           listingId,
+          slug: listingName.toLowerCase().replace(/\s+/g, '-') + listingId,
           listingName,
           keyword: kw,
           issueId: r.id,

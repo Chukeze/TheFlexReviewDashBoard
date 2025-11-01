@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useMemo } from 'react'
-import { Review, Aggregates, DerivedMetrics } from '@/lib/types'
+import { Review, Aggregates, DerivedMetrics, PerListing } from '@/lib/types'
 import { mean, zClass, bayesianScore } from '@/lib/utils'
 import { KpiGrid } from './parts/KpiGrid'
 import { KpiStat } from './parts/KpiStat'
@@ -26,7 +26,11 @@ interface PerItem {
   pct12?: number
   vol90Std?: number
 }
-
+/*
+type PerItem = Partial<PerListing> & {
+  listingId: number
+  listingName?: string
+}*/
 
 export default function Kpi({ derived, data, loading }: Props) {
   if (loading) {
@@ -83,7 +87,7 @@ export default function Kpi({ derived, data, loading }: Props) {
           ...p,
           fair: bayesianScore(p.RAll, p.vAll, derived.globalAvg, 10),
         }))
-        .sort((a, b) => b.fair - a.fair)
+        .sort((a: { fair: number }, b: { fair: number }) => b.fair - a.fair)
         .slice(0, 3),
     [per, derived.globalAvg]
   )
@@ -202,7 +206,7 @@ export default function Kpi({ derived, data, loading }: Props) {
         <KpiRankList
           title="Top by Fair Rank"
           caption="Bayesian average (m=10) to reduce small‑sample bias"
-          items={topByFairRank.map((p) => ({
+          items={topByFairRank.map((p: PerItem & { fair: number }) => ({
             id: p.listingId,
             name: p.listingName,
             right: p.fair.toFixed(2),

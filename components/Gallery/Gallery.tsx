@@ -217,8 +217,8 @@ function Lightbox({ ariaLabel = 'Image viewer' }: LightboxProps) {
         <button onClick={prev} aria-label="Previous image">
           ‹
         </button>
-        <span aria-live="polite" style={{ color: 'white' }}>
-          {index + 1} / {images.length}
+        <span aria-live="polite" style={{ color: 'red' }}>
+          {index + 2} / {images.length}
         </span>
         <button onClick={next} aria-label="Next image">
           ›
