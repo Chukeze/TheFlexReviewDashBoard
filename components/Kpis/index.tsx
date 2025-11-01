@@ -15,6 +15,19 @@ type Props = {
   loading: boolean
 }
 
+interface PerItem {
+  RAll: number
+  vAll: number
+  listingId: string | number
+  listingName?: string
+  avg90?: number
+  freshness?: number
+  pct5?: number
+  pct12?: number
+  vol90Std?: number
+}
+
+
 export default function Kpi({ derived, data, loading }: Props) {
   if (loading) {
     return (
@@ -43,8 +56,8 @@ export default function Kpi({ derived, data, loading }: Props) {
     )[0]?.[0] ?? 'n/a'
 
   // Peers arrays (for z-scoring CSS & state text)
-  const peerAvg90s = per.map((p) => p.avg90)
-  const peerFreshnessDays = per.map((p) => p.freshness)
+  const peerAvg90s = per.map((p: PerItem) => p.avg90)
+  const peerFreshnessDays = per.map((p: PerItem) => p.freshness)
 
   // Best/worst listings by 90‑day average
   const bestListingByAvg90 = useMemo(
@@ -66,7 +79,7 @@ export default function Kpi({ derived, data, loading }: Props) {
   const topByFairRank = useMemo(
     () =>
       per
-        .map((p) => ({
+        .map((p: PerItem) => ({
           ...p,
           fair: bayesianScore(p.RAll, p.vAll, derived.globalAvg, 10),
         }))
