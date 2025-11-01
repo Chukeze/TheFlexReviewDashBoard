@@ -43,7 +43,7 @@ export default function PropertyDetails({ listing }: { listing?: ListingLike}) {
           </button>
         </p>
       </section>
-      <PropertyAmenities />
+      <PropertyAmenities amenities={listing?.amenities} />
       <StayPolicy />
     </>
   )

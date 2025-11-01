@@ -3,7 +3,7 @@ import { useState } from 'react'
 import '@/styles/property.css'
 import { useTranslation } from 'react-i18next'
 
-export default function PropertyAmenities(amenities) {
+export default function PropertyAmenities({ amenities }: { amenities: string[] | undefined }) {
   const { t } = useTranslation('common')
   return (
     <>
