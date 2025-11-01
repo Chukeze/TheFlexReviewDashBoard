@@ -16,6 +16,8 @@ export type Filters = {
   category: string // '' means Any
   from: string // ISO or ''
   to: string // ISO or ''
+  minRating: number
+  maxRating: number
   presetWindowDays: Preset // 30|60|90|null
 }
 
@@ -27,6 +29,8 @@ const defaultFilters: Filters = {
   category: '',
   from: '',
   to: '',
+  minRating: 0,
+  maxRating: 5,
   presetWindowDays: null,
 }
 
