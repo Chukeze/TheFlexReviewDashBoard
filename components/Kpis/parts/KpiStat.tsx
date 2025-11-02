@@ -13,7 +13,7 @@ export function KpiStat({
 }: {
   label: string
   value: string | number
-  description?: string
+  description?: string | undefined
   statusClass?: string // e.g. 'warning-level', 'danger-level', 'success-level'
   srSuffix?: string // e.g. 'out of 5' for screen readers
   meter?: MeterProps // optional <meter> for numeric scale

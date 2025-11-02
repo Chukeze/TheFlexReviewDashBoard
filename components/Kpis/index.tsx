@@ -32,7 +32,7 @@ type PerItem = Partial<PerListing> & {
   listingName?: string
 }*/
 
-export default function Kpi({ derived, data, loading }: Props) {
+export default async function Kpi({ derived, data, loading }: Props) {
   if (loading) {
     return (
       <section
@@ -60,29 +60,39 @@ export default function Kpi({ derived, data, loading }: Props) {
     )[0]?.[0] ?? 'n/a'
 
   // Peers arrays (for z-scoring CSS & state text)
-  const peerAvg90s = per.map((p: PerItem) => p.avg90)
-  const peerFreshnessDays = per.map((p: PerItem) => p.freshness)
+  const _peers = await per
+  const peerAvg90s = _peers
+    .map((p: PerItem) => p.avg90)
+    .filter((n): n is number => typeof n === 'number')
+  const peerFreshnessDays = _peers
+    .map((p: PerItem) => p.freshness)
+    .filter((n): n is number => typeof n === 'number')
+  
+  //const peerAvg90s = (await per).map((p: PerItem) => p.avg90)
+  //const peerFreshnessDays = (await per).map((p: PerItem) => p.freshness)
 
   // Best/worst listings by 90‑day average
   const bestListingByAvg90 = useMemo(
-    () =>
-      [...per]
+    async () =>
+      [...(await per)]
         .filter((p) => Number.isFinite(p.avg90))
         .sort((a, b) => b.avg90 - a.avg90)[0],
     [per]
   )
   const worstListingByAvg90 = useMemo(
-    () =>
-      [...per]
+    async () =>
+      [...(await per)]
         .filter((p) => Number.isFinite(p.avg90))
         .sort((a, b) => a.avg90 - b.avg90)[0],
     [per]
   )
 
   // Fair rank (bayesian) and volatility lists
-  const topByFairRank = useMemo(
-    () =>
-      per
+  const topByFairRank = await useMemo(
+    async () =>
+      (
+        await per
+      )
         .map((p: PerItem) => ({
           ...p,
           fair: bayesianScore(p.RAll, p.vAll, derived.globalAvg, 10),
@@ -92,8 +102,9 @@ export default function Kpi({ derived, data, loading }: Props) {
     [per, derived.globalAvg]
   )
 
-  const mostVolatile90d = useMemo(
-    () => [...per].sort((a, b) => b.vol90Std - a.vol90Std).slice(0, 3),
+  const mostVolatile90d = await useMemo(
+    async () =>
+      [...(await per)].sort((a, b) => b.vol90Std - a.vol90Std).slice(0, 3),
     [per]
   )
 
@@ -135,35 +146,55 @@ export default function Kpi({ derived, data, loading }: Props) {
         {/* Best & Worst by 90d average */}
         <KpiStat
           label={`Best Listing Avg (90d)${
-            bestListingByAvg90?.listingName
-              ? `: ${bestListingByAvg90.listingName}`
+            (await bestListingByAvg90)?.listingName
+              ? `: ${(await bestListingByAvg90).listingName}`
               : ''
           }`}
           value={
-            Number.isFinite(bestListingByAvg90?.avg90)
-              ? bestListingByAvg90!.avg90.toFixed(2)
+            Number.isFinite((await bestListingByAvg90)?.avg90)
+              ? (await bestListingByAvg90!).avg90.toFixed(2)
               : '—'
           }
-          description={stateText(bestListingByAvg90?.avg90 ?? 0, peerAvg90s)}
-          statusClass={zClass(bestListingByAvg90?.avg90 ?? 0, peerAvg90s)}
+          description={stateText(
+            (await bestListingByAvg90)?.avg90 ?? 0,
+            peerAvg90s
+          )}
+          statusClass={zClass(
+            (await bestListingByAvg90)?.avg90 ?? 0,
+            peerAvg90s
+          )}
           srSuffix="out of 5"
-          meter={{ min: 0, max: 5, now: bestListingByAvg90?.avg90 ?? 0 }}
+          meter={{
+            min: 0,
+            max: 5,
+            now: (await bestListingByAvg90)?.avg90 ?? 0,
+          }}
         />
         <KpiStat
           label={`Worst Listing Avg (90d)${
-            worstListingByAvg90?.listingName
-              ? `: ${worstListingByAvg90.listingName}`
+            (await worstListingByAvg90)?.listingName
+              ? `: ${(await worstListingByAvg90).listingName}`
               : ''
           }`}
           value={
-            Number.isFinite(worstListingByAvg90?.avg90)
-              ? worstListingByAvg90!.avg90.toFixed(2)
+            Number.isFinite((await worstListingByAvg90)?.avg90)
+              ? (await worstListingByAvg90!).avg90.toFixed(2)
               : '—'
           }
-          description={stateText(worstListingByAvg90?.avg90 ?? 0, peerAvg90s)}
-          statusClass={zClass(worstListingByAvg90?.avg90 ?? 0, peerAvg90s)}
+          description={stateText(
+            (await worstListingByAvg90)?.avg90 ?? 0,
+            peerAvg90s
+          )}
+          statusClass={zClass(
+            (await worstListingByAvg90)?.avg90 ?? 0,
+            peerAvg90s
+          )}
           srSuffix="out of 5"
-          meter={{ min: 0, max: 5, now: worstListingByAvg90?.avg90 ?? 0 }}
+          meter={{
+            min: 0,
+            max: 5,
+            now: (await worstListingByAvg90)?.avg90 ?? 0,
+          }}
         />
         <KpiStat
           label={`Property Coverage (≥${derived.coverageMin} approved in last 90d)`}
@@ -176,27 +207,33 @@ export default function Kpi({ derived, data, loading }: Props) {
           <>
             <KpiStat
               label="Freshness (days since last review)"
-              value={worstListingByAvg90.freshness.toString()}
+              value={(await worstListingByAvg90).freshness.toString()}
               description={stateText(
-                worstListingByAvg90.freshness,
+                (await worstListingByAvg90).freshness,
                 peerFreshnessDays,
                 /*invert*/ true
               )}
               statusClass={zClass(
-                worstListingByAvg90.freshness,
+                (await worstListingByAvg90).freshness,
                 peerFreshnessDays,
                 true
               )}
             />
             <KpiStat
               label="% 5‑Star (last 90d, worst listing)"
-              value={`${Math.round((worstListingByAvg90.pct5 || 0) * 100)}%`}
+              value={`${Math.round(
+                ((await worstListingByAvg90).pct5 || 0) * 100
+              )}%`}
             />
             <KpiStat
               label="% 1–2★ (last 90d, worst listing)"
-              value={`${Math.round((worstListingByAvg90.pct12 || 0) * 100)}%`}
+              value={`${Math.round(
+                ((await worstListingByAvg90).pct12 || 0) * 100
+              )}%`}
               statusClass={
-                (worstListingByAvg90.pct12 || 0) > 0.2 ? 'warning-level' : ''
+                ((await worstListingByAvg90).pct12 || 0) > 0.2
+                  ? 'warning-level'
+                  : ''
               }
             />
           </>
@@ -207,8 +244,8 @@ export default function Kpi({ derived, data, loading }: Props) {
           title="Top by Fair Rank"
           caption="Bayesian average (m=10) to reduce small‑sample bias"
           items={topByFairRank.map((p: PerItem & { fair: number }) => ({
-            id: p.listingId,
-            name: p.listingName,
+            id: String(p.listingId),
+            name: p.listingName ?? '',
             right: p.fair.toFixed(2),
           }))}
         />
@@ -216,7 +253,7 @@ export default function Kpi({ derived, data, loading }: Props) {
           title="Most Volatile (90d)"
           caption="Higher σ = more variation in recent ratings"
           items={mostVolatile90d.map((p) => ({
-            id: p.listingId,
+            id: String(p.listingId),
             name: p.listingName,
             right: `σ ${p.vol90Std.toFixed(2)}`,
           }))}
