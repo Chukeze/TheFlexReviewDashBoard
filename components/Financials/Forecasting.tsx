@@ -37,7 +37,7 @@ export default function Forecasting() {
       <p>Coming Soon...</p>
       <article>
         <h3>Demand Forecasting</h3>
-        <p>Predict Review's Impact on Demands</p>
+        <p>Predict a Review&apos;s Impact on Demands</p>
       </article>
       <article>
         <h3>Supply Forecasting</h3>

@@ -38,6 +38,8 @@ const useGallery = () => {
   return ctx
 }
 
+const GetGallery = useGallery()
+
 function useInView<T extends HTMLElement>() {
   const ref = useRef<T | null>(null)
   const [inView, setInView] = useState(false)
@@ -96,15 +98,15 @@ function Grid({ columns = 3, gap = 8, className }: GridProps) {
         gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
       }}
     >
-      {Array.isArray(useGallery().images) &&
-        useGallery().images.map((_, i) => <Item key={i} index={i} />)}
+      {Array.isArray(GetGallery.images) &&
+        GetGallery.images.map((_, i) => <Item key={i} index={i} />)}
     </div>
   )
 }
 
 type ItemProps = { index: number }
 function Item({ index }: ItemProps) {
-  const { images, open } = useGallery()
+  const { images, open } = GetGallery
   const img = images[index]
   const { ref, inView } = useInView<HTMLButtonElement>()
   const label = img.caption ?? img.alt

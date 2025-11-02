@@ -50,7 +50,7 @@ export default function EditNotesPage() {
         setLoading(false)
       }
     })()
-  }, [id])
+  }, [fetchNote]);
 
   if (loading)
     return (

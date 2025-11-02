@@ -8,7 +8,7 @@ type Props = {
   loading: boolean
 }
 /** Normalize shape to introduce flexibility for `perListing` */
-export  async function usePer(derived: Props['derived']): Promise<DerivedMetrics['perListing']> {
+export  function usePer(derived: Props['derived']): DerivedMetrics['perListing'] {
     return useMemo(() => {
       if (!derived) return [] as unknown as DerivedMetrics['perListing'];
       // Backward compatibility: allow either `per` or `perListing`
