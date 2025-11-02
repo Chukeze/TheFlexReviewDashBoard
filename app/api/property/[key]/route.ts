@@ -107,9 +107,9 @@ export async function GET(
       state: base.state,
       country: base.country,
       propertyDesc: base.propertyDesc,
-      amenities: base.amenities.map((a) => a.amenity),
-      policies: base.policies.map((p) => p.policy),
-      rules: base.rules.map((r) => r.rule),
+      amenities: base.amenities.map((a) => a.amenity.name),
+      policies: base.policies.map((p) => p.policy.name),
+      rules: base.rules.map((r) => r.rule.name),
     }
     return NextResponse.json(
       {

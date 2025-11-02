@@ -11,17 +11,10 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL_DEV")
+  url      = env("DATABASE_URL_PROD")
+  relationMode = "prisma"
 }
 
-/*
-generator zod {
-  provider   = "prisma-zod-generator"
-  // optional:
-  // output  = "./src/lib/zod"   // default is ./prisma/generated
-  output = "../validators/zod"
-  pureModels = true              // lean model schemas; great for views
-}*/
 
 enum Color {
   RED
@@ -136,7 +129,6 @@ model Listing {
 }
 
 model PropertyRules { // House Rules, Check-in/Check-out rules
-  //id        Int      @id @default(autoincrement())
   listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
   listingId Int
   rule      Rule  @relation(fields: [ruleId], references: [id], onDelete: Cascade, map: "PropertyRules_ruleId_fkey_v2")
@@ -147,7 +139,6 @@ model PropertyRules { // House Rules, Check-in/Check-out rules
 }
 
 model PropertyPolicies { //Cancellation, Refund, Security Deposit, etc.
-  //id        Int      @id @default(autoincrement())
   listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
   listingId Int
   policy    Policy @relation(fields: [policyId], references: [id], onDelete: Cascade)
@@ -158,7 +149,6 @@ model PropertyPolicies { //Cancellation, Refund, Security Deposit, etc.
 }
 
 model PropertyAmenities {
-  //id        Int      @id @default(autoincrement())
   listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
   listingId Int
   amenityId Int

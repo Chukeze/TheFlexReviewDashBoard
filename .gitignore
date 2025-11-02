@@ -7,3 +7,4 @@
 .env.local
 /generated/prisma
 /app/[lang]
+/prisma/oldseed.ts

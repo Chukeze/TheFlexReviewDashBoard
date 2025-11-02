@@ -266,8 +266,8 @@ export default function PropertyClient({ slug }: { slug: string }) {
         </div>
       </div>
       <div
-        className="container"
-        style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr', gap: 24 }}
+        className="container"   
+        id='propertydetail__container'     
       >
         <main className="grid" style={{ gap: 24 }}>
           <PropertyDetails listing={listing} />
@@ -321,8 +321,7 @@ export default function PropertyClient({ slug }: { slug: string }) {
               </div>
             ))}
           </div>
-        </main>
-        {/* Right column: placeholder booking card */}
+        </main>        
         <aside>
           <div className="booking">
             <div
