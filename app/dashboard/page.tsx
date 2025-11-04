@@ -563,6 +563,7 @@ export default function Dashboard() {
     })
   }, [reviewsPayload, reviewFilterForSummaryView])
 
+
   return (
     <main className="grid theme-flex-light" style={{ gap: 24 }}>
       <div>
@@ -589,7 +590,7 @@ export default function Dashboard() {
           className={`button ghost small ${
             viewMode === 'cleaned' ? 'active' : ''
           }`}
-          onClick={() => setViewMode('cleaned')}
+          onClick={() => {setViewMode('cleaned'); showNotice('Projections view is coming soon!')}}
           style={{ marginLeft: 8 }}
           disabled={true}
         >

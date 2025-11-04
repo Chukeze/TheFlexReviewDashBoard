@@ -1,51 +1,51 @@
 export const PROPERTY_IMAGES: Record<string, string[]> = {
   'soho-studio-king-bed': [
-    '/images/properties/soho.webp',
-    '/images/properties/soho2.webp',
-    '/images/properties/soho3.webp',
-    '/images/properties/soho4.webp',
-    '/images/properties/soho5.webp',
-    '/images/properties/soho6.webp',
+    '/images/properties/soho-studio-king-bed/soho.webp',
+    '/images/properties/soho-studio-king-bed/soho2.webp',
+    '/images/properties/soho-studio-king-bed/soho3.webp',
+    '/images/properties/soho-studio-king-bed/soho4.webp',
+    '/images/properties/soho-studio-king-bed/soho5.webp',
+    '/images/properties/soho-studio-king-bed/soho6.webp',
   ],
   'shoreditch-heights-2br-loft': [
-    '/images/properties/shore.webp',
-    '/images/properties/shore2.webp',
-    '/images/properties/shore3.webp',
-    '/images/properties/shore4.webp',
-    '/images/properties/shore5.webp',
-    '/images/properties/shore6.webp',
+    '/images/properties/shoreditch-heights-2br-loft/shore.webp',
+    '/images/properties/shoreditch-heights-2br-loft/shore2.webp',
+    '/images/properties/shoreditch-heights-2br-loft/shore3.webp',
+    '/images/properties/shoreditch-heights-2br-loft/shore4.webp',
+    '/images/properties/shoreditch-heights-2br-loft/shore5.webp',
+    '/images/properties/shoreditch-heights-2br-loft/shore6.webp',
   ],
   'kensington-garden-flat': [
-    '/images/properties/kens1.webp',
-    '/images/properties/kens2.webp',
-    '/images/properties/kens3.webp',
-    '/images/properties/kens4.webp',
-    '/images/properties/kens5.webp',
-    '/images/properties/kens6.webp',
+    '/images/properties/kensington-garden-flat/kens1.webp',
+    '/images/properties/kensington-garden-flat/kens2.webp',
+    '/images/properties/kensington-garden-flat/kens3.webp',
+    '/images/properties/kensington-garden-flat/kens4.webp',
+    '/images/properties/kensington-garden-flat/kens5.webp',
+    '/images/properties/kensington-garden-flat/kens6.webp',
   ],
   '3a-se1-borough-market-loft': [
-    '/images/properties/boro1.webp',
-    '/images/properties/boro2.webp',
-    '/images/properties/boro3.webp',
-    '/images/properties/boro4.webp',
-    '/images/properties/boro5.webp',
-    '/images/properties/boro6.webp',
+    '/images/properties/3a-se1-borough-market-loft/boro1.webp',
+    '/images/properties/3a-se1-borough-market-loft/boro2.webp',
+    '/images/properties/3a-se1-borough-market-loft/boro3.webp',
+    '/images/properties/3a-se1-borough-market-loft/boro4.webp',
+    '/images/properties/3a-se1-borough-market-loft/boro5.webp',
+    '/images/properties/3a-se1-borough-market-loft/boro6.webp',
   ],
   '2br-finsbury-gardens-apt': [
-    '/images/properties/fins1.webp',
-    '/images/properties/fins2.webp',
-    '/images/properties/fins3.webp',
-    '/images/properties/fins4.webp',
-    '/images/properties/fins5.webp',
-    '/images/properties/fins6.webp',
+    '/images/properties/2br-finsbury-gardens-apt/fins1.webp',
+    '/images/properties/2br-finsbury-gardens-apt/fins2.webp',
+    '/images/properties/2br-finsbury-gardens-apt/fins3.webp',
+    '/images/properties/2br-finsbury-gardens-apt/fins4.webp',
+    '/images/properties/2br-finsbury-gardens-apt/fins5.webp',
+    '/images/properties/2br-finsbury-gardens-apt/fins6.webp',
   ],
-  'br-ridge-gardens-apt': [
-    '/images/properties/ridge1.webp',
-    '/images/properties/ridge2.webp',
-    '/images/properties/ridge3.webp',
-    '/images/properties/ridge4.webp',
-    '/images/properties/ridge5.webp',
-    '/images/properties/ridge6.webp',
+  '2br-ridge-gardens-apt': [
+    `/images/properties/2br-ridge-gardens-apt/ridge1.webp`,
+    '/images/properties/2br-ridge-gardens-apt/ridge2.webp',
+    '/images/properties/2br-ridge-gardens-apt/ridge3.webp',
+    '/images/properties/2br-ridge-gardens-apt/ridge4.webp',
+    '/images/properties/2br-ridge-gardens-apt/ridge5.webp',
+    '/images/properties/2br-ridge-gardens-apt/ridge6.webp',
   ],
 } as const
 
@@ -59,6 +59,7 @@ const FALLBACK = [
 
 export function getPropertyImages(slug: string): string[] {
     const key = slug.toLowerCase() as KnownSlug;
+    console.log("GET PROPERTY IMAGES KEY:", key);
     return PROPERTY_IMAGES[key] ?? FALLBACK;
 }
 
