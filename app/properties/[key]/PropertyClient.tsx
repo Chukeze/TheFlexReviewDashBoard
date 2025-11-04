@@ -1,5 +1,5 @@
 'use client'
-
+import Image from 'next/image'
 import InitGalleryButton from '@/components/InitGalleryButton'
 import PropertyDetails from '@/components/PropertyDetails'
 import { useFetch } from '@/hooks/useFetch'
@@ -8,6 +8,7 @@ import { PropertyResponse } from '@/lib/types'
 import { useMemo } from 'react'
 import './gallery.css'
 import { Stars } from '@/components/ReviewCard'
+import { altFromSlug, getPropertyImages } from '@/lib/propertyImages'
 
 export default function PropertyClient({ slug }: { slug: string }) {
   const options = useMemo(
@@ -46,11 +47,13 @@ export default function PropertyClient({ slug }: { slug: string }) {
 
   const { listing, reviews } = data
   const listingName = listing?.name || slug
+  const images = getPropertyImages(listing.slug)
   const reviewsRatings = reviews
     .map((r) => r.overall)
     .filter((s): s is number => s !== null)
   const averageRating =
     reviewsRatings.reduce((sum, r) => sum + r, 0) / (reviewsRatings.length || 1)
+
   return (
     <main className="theme-flex">
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -63,90 +66,28 @@ export default function PropertyClient({ slug }: { slug: string }) {
           >
             <div className="gallery__viewport" data-gallery-viewport>
               <div className="gallery__track" data-gallery-track>
-                <div
-                  className="gallery__slide"
-                  role="group"
-                  aria-roledescription="slide"
-                  aria-label="1 of 8"
-                >
-                  <div className="gallery__ratio">
-                    <div className="gallery__imgwrap">
-                      <img
-                        className="gallery__img"
-                        alt="Living room"
-                        src="https://hostaway-platform.s3.us-west-2.amazonaws.com/listing/23248-181888-w83Mggip99tDcTo76asx4ziO1lK4w-4X6nM-gLYWw-I-65c113682d237"
-                      />
+                {images.map((src, i) => (
+                  <div
+                    key={`slide-${i}`}
+                    className="gallery__slide"
+                    role="group"
+                    aria-roledescription="slide"
+                    aria-label={`${i + 1} of ${images.length}`}
+                  >
+                    <div className="gallery__ratio">
+                      <div className="gallery__imgwrap">
+                        <Image
+                          src={src}
+                          alt={altFromSlug(slug, i)}
+                          className="gallery__img"
+                          width={1200}
+                          height={800}
+                          unoptimized
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                <div
-                  className="gallery__slide"
-                  role="group"
-                  aria-roledescription="slide"
-                  aria-label="2 of 8"
-                >
-                  <div className="gallery__ratio">
-                    <div className="gallery__imgwrap">
-                      <img
-                        className="gallery__img"
-                        alt="Garden"
-                        src="https://hostaway-platform.s3.us-west-2.amazonaws.com/listing/23248-181888-LBwCMi04KLS1A0jhfSdFBwE4--kvXN2aIzDP-QB9Esuw-65c12e9c2bcaf"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  className="gallery__slide"
-                  role="group"
-                  aria-roledescription="slide"
-                  aria-label="3 of 8"
-                >
-                  <div className="gallery__ratio">
-                    <div className="gallery__imgwrap">
-                      <img
-                        className="gallery__img"
-                        alt="Bedroom"
-                        src="https://hostaway-platform.s3.us-west-2.amazonaws.com/listing/23248-181888-6WoZ8GoH8HjYGTzvEZL6nVYNSXFSp3kHrUtxx9XerG0-65c12e9b1cf2e"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  className="gallery__slide"
-                  role="group"
-                  aria-roledescription="slide"
-                  aria-label="4 of 8"
-                >
-                  <div className="gallery__ratio">
-                    <div className="gallery__imgwrap">
-                      <img
-                        className="gallery__img"
-                        alt="Bedroom 2"
-                        src="https://hostaway-platform.s3.us-west-2.amazonaws.com/listing/23248-181888-6--BUI8Arsxy2JvcypGNzlvnOP334qapcRSyi0A--GrkI-65c12e9a03073"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  className="gallery__slide"
-                  role="group"
-                  aria-roledescription="slide"
-                  aria-label="5 of 8"
-                >
-                  <div className="gallery__ratio">
-                    <div className="gallery__imgwrap">
-                      <img
-                        className="gallery__img"
-                        alt="Bathroom"
-                        src="https://hostaway-platform.s3.us-west-2.amazonaws.com/listing/23248-181888-DFAbYalIYdOMK94HjcY6qtNrOx0pBBaSxh--46iHvDX4-65c12e98dc2bd"
-                      />
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -206,57 +147,42 @@ export default function PropertyClient({ slug }: { slug: string }) {
               aria-live="polite"
               data-gallery-counter
             >
-              3 / 8
+              1 / {images.length}
             </div>
           </div>
 
           <div className="gallery__desktop">
             <div className="gallery-grid">
-              <figure className="gallery-grid__item gallery-grid__item--main">
-                <img
-                  alt="Main living area"
-                  src="https://hostaway-platform.s3.us-west-2.amazonaws.com/listing/23248-181888-w83Mggip99tDcTo76asx4ziO1lK4w-4X6nM-gLYWw-I-65c113682d237"
-                />
-                <div className="gallery-grid__overlay" aria-hidden="true"></div>
-              </figure>
-
-              <figure className="gallery-grid__item">
-                <img
-                  alt="Garden"
-                  src="https://hostaway-platform.s3.us-west-2.amazonaws.com/listing/23248-181888-LBwCMi04KLS1A0jhfSdFBwE4--kvXN2aIzDP-QB9Esuw-65c12e9c2bcaf"
-                />
-                <div className="gallery-grid__overlay" aria-hidden="true"></div>
-              </figure>
-
-              <figure className="gallery-grid__item">
-                <img
-                  alt="Bedroom"
-                  src="https://hostaway-platform.s3.us-west-2.amazonaws.com/listing/23248-181888-6WoZ8GoH8HjYGTzvEZL6nVYNSXFSp3kHrUtxx9XerG0-65c12e9b1cf2e"
-                />
-                <div className="gallery-grid__overlay" aria-hidden="true"></div>
-              </figure>
-
-              <figure className="gallery-grid__item gallery-grid__item--tr">
-                <img
-                  alt="Bedroom 2"
-                  src="https://hostaway-platform.s3.us-west-2.amazonaws.com/listing/23248-181888-6--BUI8Arsxy2JvcypGNzlvnOP334qapcRSyi0A--GrkI-65c12e9a03073"
-                />
-                <div className="gallery-grid__overlay" aria-hidden="true"></div>
-              </figure>
-
-              <figure className="gallery-grid__item">
-                <img
-                  alt="Bathroom"
-                  src="https://hostaway-platform.s3.us-west-2.amazonaws.com/listing/23248-181888-DFAbYalIYdOMK94HjcY6qtNrOx0pBBaSxh--46iHvDX4-65c12e98dc2bd"
-                />
-                <div className="gallery-grid__overlay" aria-hidden="true"></div>
-              </figure>
-
+              {images.slice(0, 5).map((src, i) => (
+                <figure
+                  key={i}
+                  className={[
+                    'gallery-grid__item',
+                    i === 0 ? 'gallery-grid__item--main' : '',
+                    i === 3 ? 'gallery-grid__item--tr' : '',
+                  ].join(' ')}
+                >
+                  <Image
+                    src={src}
+                    alt={altFromSlug(slug, i)}
+                    width={i === 0 ? 1200 : 600}
+                    height={i === 0 ? 800 : 400}
+                    sizes={
+                      i === 0
+                        ? '(min-width: 1024px) 60vw, 90vw'
+                        : '(min-width: 1024px) 20vw, 45vw'
+                    }
+                    className="gallery__img"
+                    priority={i === 0}
+                    unoptimized
+                  />
+                  <div className="gallery-grid__overlay" aria-hidden="true" />
+                </figure>
+              ))}
               <InitGalleryButton viewAll={initGallery} />
             </div>
           </div>
         </div>
-
         <div style={{ padding: '0 0 0 0' }}>
           <h2>{listingName}</h2>
           <p className="muted">
@@ -265,10 +191,7 @@ export default function PropertyClient({ slug }: { slug: string }) {
           </p>
         </div>
       </div>
-      <div
-        className="container"   
-        id='propertydetail__container'     
-      >
+      <div className="container" id="propertydetail__container">
         <main className="grid" style={{ gap: 24 }}>
           <PropertyDetails listing={listing} />
           <div className="card">
@@ -321,7 +244,7 @@ export default function PropertyClient({ slug }: { slug: string }) {
               </div>
             ))}
           </div>
-        </main>        
+        </main>
         <aside>
           <div className="booking">
             <div

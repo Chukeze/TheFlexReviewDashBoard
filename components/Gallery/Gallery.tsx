@@ -1,6 +1,7 @@
 // components/Gallery.tsx
 'use client'
 
+import Image from 'next/image'
 import React, {
   createContext,
   useCallback,
@@ -194,7 +195,7 @@ function Lightbox({ ariaLabel = 'Image viewer' }: LightboxProps) {
       }}
     >
       <figure style={{ margin: 0, maxWidth: '90vw', maxHeight: '90vh' }}>
-        <img
+        <Image
           src={img.src}
           alt={img.alt}
           style={{ maxWidth: '100%', maxHeight: '80vh', objectFit: 'contain' }}
